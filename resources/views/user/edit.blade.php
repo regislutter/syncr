@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+    @if(\Auth::user()->hasRight(\App\Right::USER_CHANGE_ROLES))
     <h3>Roles</h3>
     @foreach($roles as $role)
         @if($user->is($role->id))
@@ -56,6 +56,6 @@
     @endif
 
     <a class="button small round secondary" href="{{ route('user.index') }}">Cancel</a>
-    {!! Form::submit('Modify user', array('class' => 'button small round success')) !!}
+    {!! Form::submit('Save user', array('class' => 'button small round success')) !!}
     {!! Form::close() !!}
 @stop

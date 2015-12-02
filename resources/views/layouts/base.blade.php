@@ -17,9 +17,11 @@
             <section class="top-bar-section">
                 <!-- Right Nav Section -->
                 <ul class="right">
+                    @if(\Auth::user()->hasRight(\App\Right::PROJECT_SUBSCRIBE))
                     <li class="{{ \App\Helpers\ActiveRoute::is_active('subscriptions') }}"><a href="{{ route('subscriptions.index') }}"><span class="fi-eye-open" title="subscriptions" aria-hidden="true"></span> Subscriptions</a></li>
+                    @endif
                     <li class="{{ \App\Helpers\ActiveRoute::is_active('user/'.Auth::user()->id) }}"><a href="{{ route('user.show', Auth::user()->id) }}"><span class="fi-person-genderless" title="user" aria-hidden="true"></span> Profile</a></li>
-                    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::ACCESS_ADMIN))
                     <li class="active"><a href="{{ route('admin') }}"><span class="fi-shield" title="admin" aria-hidden="true"></span> Admin</a></li>
                     @endif
                     <li class="align-right"><a href="{{ route('auth.logout') }}"><span class="fi-account-logout" title="logout" aria-hidden="true"></span> Log out</a></li>
@@ -36,7 +38,7 @@
                                     <li class="{{ \App\Helpers\ActiveRoute::is_active('client/'.$client->id) }}"><a href="{{ route('client.show', $client->id) }}">{{ $client->name }}</a></li>
                                 @endforeach
                             @endif
-                            @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                            @if(\Auth::user()->hasRight(\App\Right::CLIENT_CREATE))
                                 <li class="action {{ \App\Helpers\ActiveRoute::is_active('client/create') }}"><a href="{{ route('client.create') }}">Add client</a></li>
                             @endif
                         </ul>
@@ -48,7 +50,7 @@
                                     <li class="{{ \App\Helpers\ActiveRoute::is_active('project/'.$project->id) }}"><a href="{{ route('project.show', $project->id) }}">{{ $project->name }}</a></li>
                                 @endforeach
                             @endif
-                            @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                            @if(\Auth::user()->hasRight(\App\Right::PROJECT_CREATE))
                                 <li class="action {{ \App\Helpers\ActiveRoute::is_active('project/create') }}"><a href="{{ route('project.create') }}">Create new project</a></li>
                             @endif
                         </ul>

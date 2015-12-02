@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     Route::get('/admin/projects', ['as' => 'admin.projects', 'uses' => 'AdminController@projects']);
     Route::get('/admin/users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
     Route::get('/admin/roles', ['as' => 'admin.roles', 'uses' => 'AdminController@roles']);
+    Route::get('/admin/rights', ['as' => 'admin.rights', 'uses' => 'AdminController@rights']);
 
     Route::get('/subscribe/{project}', ['as' => 'subscribe.project', 'uses' => 'SubscriptionController@subscribe']);
     Route::get('/unsubscribe/{project}', ['as' => 'unsubscribe.project', 'uses' => 'SubscriptionController@unsubscribe']);
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     Route::get('file/{file}/status/{status}', ['as' => 'file.status', 'uses' => 'FileController@changeStatus']);
     Route::resource('notification', 'NotificationController');
     Route::resource('role', 'RoleController');
+    Route::resource('right', 'RightController');
 });
 
 // Authentication routes

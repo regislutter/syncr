@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Client;
-use App\Project;
-use App\User;
-use App\Role;
 use App\Right;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class AdminController extends Controller
+class RightController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +17,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $rights = Right::all();
+        return view('right.index', ['rights' => $rights]);
     }
 
     /**
@@ -31,7 +28,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('right.create');
     }
 
     /**
@@ -42,7 +39,15 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:rights|max:255',
+        ]);
+
+        $right = new Right();
+        $right->name = $request->input('name');
+        $right->save();
+
+        return redirect()->route('right.index');
     }
 
     /**
@@ -87,27 +92,7 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
-
-    public function clients(){
-        return view('admin.clients', ['clients' => Client::all()]);
-    }
-
-    public function projects(){
-        return view('admin.projects', ['projects' => Project::all()]);
-    }
-
-    public function users(){
-        $users = User::paginate(10);
-        return view('admin.users', ['users' => $users, 'roles' => Role::all()]);
-    }
-
-    public function roles(){
-        return view('admin.roles', ['roles' => Role::all()]);
-    }
-
-    public function rights(){
-        return view('admin.rights', ['rights' => Right::all()]);
+        Right::destroy($id);
+        return redirect()->route('right.index');
     }
 }

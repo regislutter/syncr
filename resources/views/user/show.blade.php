@@ -51,7 +51,7 @@
 
     @if($user->id == Auth::user()->id)
         <a class="button small round" href="{{ route('user.edit', $user->id) }}">Edit my profile</a>
-    @elseif(Auth::user()->is(\App\Role::ADMIN) || Auth::user()->is(\App\Role::SUPER_ADMIN))
+    @elseif(\Auth::user()->hasRight(\App\Right::USER_MODIFY))
         <a class="button small round" href="{{ route('user.edit', $user->id) }}">Edit user</a>
     @endif
 

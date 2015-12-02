@@ -6,7 +6,7 @@
     <h1>{{ $copydeck->name }}</h1>
     <div class="small">Project: <a href="{{ route('project.show', $copydeck->project->id) }}">{{ $copydeck->project->name }}</a></div>
     <div class="small">Client: <a href="{{ route('client.show', $copydeck->project->client->id) }}">{{ $copydeck->project->client->name }}</a></div>
-    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+    @if(\Auth::user()->hasRight(\App\Right::VERSION_CREATE))
     <a class="button small round right" href="{{ route('file.create', [$copydeck->project->id, $copydeck->id]) }}"><span class="fi-plus" title="star" aria-hidden="true"></span> New version</a>
     @endif
     <h4>{{ $copydeck->files->count() }} Versions</h4>
@@ -39,16 +39,16 @@
                     <a class="copy-button label round" data-clipboard-text="{{ substr($file->link, 0, strrpos($file->link, '/')) }}" title="Click to copy the path."><span class="fi-browser-type-chrome" title="chrome" aria-hidden="true"></span> Other browsers</a>
                 </td>
                 <td>
-                    @if((\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::SUPER_ADMIN)) && $file->status == \App\File::STATUS_READY)
+                    @if(\Auth::user()->hasRight(\App\Right::VERSION_STATUS_TO_IN_EDITION) && $file->status == \App\File::STATUS_READY)
                         <a href="{{ route('file.status', [$file->id, \App\File::STATUS_IN_EDITION]) }}" class="button tiny warning"><span class="fi-pencil" title="edition" aria-hidden="true"></span> Back to edition</a>
                     @endif
-                    @if((\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::SUPER_ADMIN)) && $file->status == \App\File::STATUS_IN_EDITION)
+                    @if(\Auth::user()->hasRight(\App\Right::VERSION_STATUS_TO_READY) && $file->status == \App\File::STATUS_IN_EDITION)
                         <a href="{{ route('file.status', [$file->id, \App\File::STATUS_READY]) }}" class="button tiny success"><span class="fi-circle-check" title="ready" aria-hidden="true"></span> Ready for development</a>
                     @endif
-                    @if((\Auth::user()->is(\App\Role::DEVELOPER) || \Auth::user()->is(\App\Role::SUPER_ADMIN)) && $file->status == \App\File::STATUS_READY)
+                    @if(\Auth::user()->hasRight(\App\Right::VERSION_STATUS_TO_IN_DEVELOPMENT) && $file->status == \App\File::STATUS_READY)
                         <a href="{{ route('file.status', [$file->id, \App\File::STATUS_IN_DEVELOPMENT]) }}" class="button tiny"><span class="fi-code" title="code" aria-hidden="true"></span> Starting development</a>
                     @endif
-                    @if((\Auth::user()->is(\App\Role::DEVELOPER) || \Auth::user()->is(\App\Role::SUPER_ADMIN)) && $file->status == \App\File::STATUS_IN_DEVELOPMENT)
+                    @if(\Auth::user()->hasRight(\App\Right::VERSION_STATUS_TO_DEPLOYED) && $file->status == \App\File::STATUS_IN_DEVELOPMENT)
                         <a href="{{ route('file.status', [$file->id, \App\File::STATUS_DEPLOYED]) }}" class="button tiny success"><span class="fi-circle-check" title="done" aria-hidden="true"></span> Development deployed</a>
                     @endif
                     @if($file->status == \App\File::STATUS_DEPLOYED)
@@ -68,8 +68,10 @@
         <span class="round label">Coming soon...</span>
     </div>
     <h4>Other actions</h4>
-    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+    @if(\Auth::user()->hasRight(\App\Right::COPYDECK_MODIFY))
         <a class="button tiny round" href="{{ route('copydeck.edit', $copydeck->id) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit copydeck</a>
+    @endif
+    @if(\Auth::user()->hasRight(\App\Right::COPYDECK_DELETE))
         <a class="button tiny round alert deleteEl"
            data-route="{{ route('project.destroy', $copydeck->id) }}"
            data-redirect="{{ route('project.show', $copydeck->project->id) }}"

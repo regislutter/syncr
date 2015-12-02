@@ -21,10 +21,10 @@
                 <td><a href="{{ route('client.show', [$client->id]) }}">{{ $client->name }}</a></td>
                 <td class="center">{{ $client->projects->count() }}</td>
                 <td>
-                    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::CLIENT_ARCHIVE))
                         <a class="button tiny warning" href="{{ route('client.archive', $client->id) }}"><span class="fi-folder" title="archive" aria-hidden="true"></span> Archive</a>
                     @endif
-                    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::CLIENT_MODIFY))
                         <a href="{{ route('client.edit', $client->id) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Modify</a>
                     @endif
                 </td>
@@ -47,10 +47,10 @@
                 <td><a href="{{ route('client.show', [$client->id]) }}">{{ $client->name }}</a></td>
                 <td class="center">{{ $client->projects->count() }}</td>
                 <td>
-                    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::CLIENT_ARCHIVE))
                         <a class="button tiny success" href="{{ route('client.publish', $client->id) }}"><span class="fi-history" title="republish" aria-hidden="true"></span> Republish</a>
                     @endif
-                    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::CLIENT_MODIFY))
                         <a href="{{ route('client.edit', $client->id) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Modify</a>
                     @endif
                 </td>

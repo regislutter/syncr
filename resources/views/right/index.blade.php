@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Roles list')
+@section('title', 'Rights list')
 
 @section('content')
-    <a class="button small round right" href="{{ route('role.create') }}">Create new role</a>
-    <h1>Roles list</h1>
+    <a class="button small round right" href="{{ route('right.create') }}">Create new right</a>
+    <h1>Rights list</h1>
     <table>
         <thead>
         <tr>
@@ -13,14 +13,14 @@
         </tr>
         </thead>
         <tbody>
-        @forelse($roles as $role)
+        @forelse($rights as $right)
             <tr>
-                <td>{{ $role->id }}</td>
-                <td>{{ $role->name }}</td>
+                <td>{{ $right->id }}</td>
+                <td>{{ $right->name }}</td>
             </tr>
         @empty
             <tr>
-                <td colspan="3">No roles yet.</td>
+                <td colspan="3">No rights yet.</td>
             </tr>
         @endforelse
         </tbody>

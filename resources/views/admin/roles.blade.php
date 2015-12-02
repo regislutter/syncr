@@ -19,7 +19,7 @@
                 <td>{{ $role->id }}</td>
                 <td>{{ $role->name }}</td>
                 <td>
-                    <a class="button tiny">Modify</a>
+                    <a href="{{ route('role.edit', $role->id) }}" class="button tiny">Modify</a>
                     {!! Form::open(array('route' => array('role.destroy', $role->id), 'method' => 'delete')) !!}
                     <button type="submit" class="button tiny alert">Delete</button>
                     {!! Form::close() !!}

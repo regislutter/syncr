@@ -33,10 +33,10 @@
                 <td class="center">{{ $nbCd }}</td>
                 <td>@if($nbCd) <a href="{{ route('copydeck.show', $project->copydecks->last()->id) }}">{{ $project->copydecks->last()->name }}</a> @endif</td>
                 <td>
-                    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::PROJECT_ARCHIVE))
                         <a class="button tiny warning" href="{{ route('project.archive', $project->id) }}"><span class="fi-folder" title="archive" aria-hidden="true"></span> Archive</a>
                     @endif
-                    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::PROJECT_MODIFY))
                         <a href="{{ route('project.edit', $project->id) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Modify</a>
                     @endif
                 </td>
@@ -66,10 +66,10 @@
                 <td class="center">{{ $nbCd }}</td>
                 <td>@if($nbCd) <a href="{{ route('copydeck.show', $project->copydecks->last()->id) }}">{{ $project->copydecks->last()->name }}</a> @endif</td>
                 <td>
-                    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::PROJECT_ARCHIVE))
                         <a class="button tiny success" href="{{ route('project.publish', $project->id) }}"><span class="fi-history" title="republish" aria-hidden="true"></span> Republish</a>
                     @endif
-                    @if(\Auth::user()->is(\App\Role::EDITOR) || \Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+                    @if(\Auth::user()->hasRight(\App\Right::PROJECT_MODIFY))
                         <a href="{{ route('project.edit', $project->id) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Modify</a>
                     @endif
                 </td>
@@ -82,8 +82,10 @@
         </tbody>
     </table>
     <h4>Other actions</h4>
-    @if(\Auth::user()->is(\App\Role::ADMIN) || \Auth::user()->is(\App\Role::SUPER_ADMIN))
+    @if(\Auth::user()->hasRight(\App\Right::CLIENT_MODIFY))
     <a class="button tiny round left" href="{{ route('client.edit', $client->id) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit client</a>
+    @endif
+    @if(\Auth::user()->hasRight(\App\Right::CLIENT_DELETE))
     <a class="button tiny round alert deleteEl"
        data-route="{{ route('client.destroy', $client->id) }}"
        data-redirect="{{ route('admin') }}"

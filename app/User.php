@@ -121,6 +121,25 @@ class User extends Model implements AuthenticatableContract,
     }
 
     /**
+     * Check if the user has the right to do something
+     *
+     * @param $rightId
+     * @return bool
+     */
+    public function hasRight($rightId)
+    {
+        $roles = $this->roles()->get();
+        foreach($roles as $role)
+        {
+            if($role->hasRight($rightId)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Check if the user is subscribed to a project
      *
      * @param $projectId

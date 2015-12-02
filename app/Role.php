@@ -15,4 +15,26 @@ class Role extends Model
     public function users(){
         return $this->belongsToMany('App\User', 'users_roles');
     }
+    public function rights(){
+        return $this->belongsToMany('App\Right', 'roles_rights');
+    }
+
+    /**
+     * Check if the role has the right to do something
+     *
+     * @param $rightId
+     * @return bool
+     */
+    public function hasRight($rightId)
+    {
+        foreach ($this->rights()->get() as $right)
+        {
+            if ($right->id == $rightId)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

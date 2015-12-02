@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Role;
+use App\Right;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,8 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return view('role.index', ['roles' => $roles]);
+        return view('role.index', ['roles' => Role::all()]);
     }
 
     /**
@@ -28,7 +28,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('role.create');
+        return view('role.create', ['rights' => Right::all()]);
     }
 
     /**
@@ -47,7 +47,9 @@ class RoleController extends Controller
         $role->name = $request->input('name');
         $role->save();
 
-        return redirect()->route('role.index');
+        $role->rights()->sync($request->get('rights'));
+
+        return redirect()->route('admin.roles');
     }
 
     /**
@@ -69,7 +71,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('role.edit', ['role' => Role::find($id), 'rights' => Right::all()]);
     }
 
     /**
@@ -81,7 +83,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255'
+        ]);
+
+        $role = Role::find($id);
+        $role->name = $request->input('name');
+        $role->save();
+
+        $role->rights()->sync($request->get('rights'));
+
+        return redirect()->route('admin.roles');
     }
 
     /**
