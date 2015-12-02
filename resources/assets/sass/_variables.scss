@@ -1,0 +1,60 @@
+/* Colors */
+$bg: #FFF;
+
+$primary: #45ADA8;
+$primary-color: $primary;
+$primary-dark: #547980;
+$primary-light: lighten($primary, 20%);
+
+$secondary: #556270;
+$secondary-dark: darken($secondary, 20%);
+$secondary-light: lighten($secondary, 20%);
+
+$color-text: #212121;
+$color-info: #a0d3e8;
+
+$success-color: #9DE0AD;
+$warning-color: #FF9F80;
+$alert-color: #C44D58;
+
+$red: #CC333F;
+$orange: #EB6841;
+$yellow: #EDC951;
+$blue: #00A0B0;
+$green: #CCCC33;
+$braun: #6A4A3C;
+$braun-dark: #594F4F;
+$pink: #F56991;
+$purple: #BD1550;
+$purple-dark: #490A3D;
+$cherry: #FF6B6B;
+$apple: #C7F464;
+$turquoise: #4ECDC4;
+
+$white: #FFF;
+$grey: grey;
+$lightgrey: #DCDCDC;
+
+/* Status colors */
+$color-status-inedition: $braun;
+$color-status-ready: $cherry;
+$color-status-indevelopment: $blue;
+$color-status-deployed: $success-color;
+$color-status-late: $orange;
+$color-status-really-late: $red;
+
+/* Override Foundation Colors */
+$topbar-bg-color: $secondary;
+$topbar-link-bg-hover: $secondary-light;
+$topbar-dropdown-bg: $secondary;
+$topbar-dropdown-link-bg: $secondary;
+$topbar-dropdown-link-bg-hover: $secondary-light;
+$topbar-dropdown-label-bg: $secondary;
+
+/* Fonts */
+
+/* Sizes */
+$font-family-sans-serif: 'HelveticaNeue-Light', sans-serif;
+$font-family-light-sans-serif: 'HelveticaNeue-Light', sans-serif;
+$font-family-ultra-light-sans-serif:'AvenirNextCondensed-UltraLight', sans-serif;
+$font-family-serif: 'Georgia', 'Times New Roman', serif;

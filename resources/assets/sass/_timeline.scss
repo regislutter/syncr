@@ -1,0 +1,134 @@
+/* Timeline Legend */
+.legend {
+    dd.status a {
+        padding: .1875rem 0.5rem;
+    }
+
+    /* Status */
+    .status {
+        &:before {
+            content: '';
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: grey;
+            border: 1px solid white;
+            margin-right: 5px;
+        }
+
+        &.in-edition:before {
+            background-color: $color-status-inedition;
+        }
+        &.ready:before {
+            background-color: $color-status-ready;
+        }
+        &.in-development:before {
+            background-color: $color-status-indevelopment;
+        }
+        &.deployed:before {
+            background-color: $color-status-deployed;
+        }
+        &.ready.late:before, &.in-development.late:before {
+            background-color: $color-status-late;
+        }
+        &.ready.late.really:before, &.in-development.late.really:before {
+            background-color: $color-status-really-late;
+        }
+    }
+}
+
+/* Timeline */
+.timeline {
+    .date {
+        position: relative;
+        width: 30%;
+        margin: 19px auto 0;
+        text-align: center;
+        color: white;
+        background-color: $secondary;
+        /*border: 1px solid #D88B45;*/
+        border-radius: 15px;
+    }
+
+    .copydeck {
+        position: relative;
+        width: 50%;
+        height: 74px;
+        padding: 10px;
+        margin: 19px auto 0;
+        border: 1px solid $secondary;
+        border-radius: 37px;
+
+        .lastversion {
+            color: $grey;
+        }
+
+        img {
+            display: block;
+            float: left;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border: 1px solid $lightgrey;
+            border-radius: 50%;
+        }
+
+        &:hover{
+            background: lighten($secondary, 50%);
+        }
+
+        &:last-of-type:after {
+            display: none;
+        }
+
+        /* Status */
+        &.status {
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 10px;
+                left: 15px;
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                background-color: grey;
+                border: 1px solid white;
+            }
+            &.in-edition:before {
+                background-color: $color-status-inedition;
+            }
+            &.ready:before {
+                background-color: $color-status-ready;
+            }
+            &.in-development:before {
+                background-color: $color-status-indevelopment;
+            }
+            &.deployed:before {
+                background-color: $color-status-deployed;
+            }
+            &.ready.late:before, &.in-development.late:before {
+                background-color: $color-status-late;
+            }
+            &.ready.late.really:before, &.in-development.late.really:before {
+                background-color: $color-status-really-late;
+            }
+        }
+    }
+
+    .copydeck, .date {
+        /* Links bars */
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: -20px;
+            margin: 0 auto;
+            width: 3px;
+            height: 20px;
+            background-color: $secondary;
+        }
+    }
+}
