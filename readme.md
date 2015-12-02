@@ -1,11 +1,12 @@
 ## Gulp
 
-This project use Gulp (included with Laravel) and Elixir (Laravel's gulp tool) to build the application.
+This project use Gulp (included with Laravel) and Elixir (Laravel's gulp tool) to build the application: [Elixir documentation](http://laravel.com/docs/5.1/elixir)
 
 ### Gulp commands
 
-- `gulp`: Compile SASS and build the app
-- `gulp watch`: Watch any modification in the SASS files and compile them
+- `gulp`: Run all tasks (By default: compile SASS and build the app)
+- `gulp --production`: Run all tasks and minify all CSS and JavaScript
+- `gulp watch`: Watch any modification in the assets (SASS files, etc.) and compile them
 
 ## Laravel PHP Framework
 
