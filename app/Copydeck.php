@@ -9,7 +9,12 @@ class Copydeck extends Model
     public function project(){
         return $this->belongsTo('App\Project');
     }
+
     public function files(){
         return $this->hasMany('App\File');
+    }
+
+    public function discussions(){
+        return $this->hasMany('App\Discussion');
     }
 }

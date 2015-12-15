@@ -15,6 +15,7 @@
     @if(\Auth::user()->hasRight(\App\Right::COPYDECK_CREATE))
     <a class="button small round right" href="{{ route('copydeck.create', $project->id) }}"><span class="fi-plus" title="star" aria-hidden="true"></span> Create a new copydeck</a>
     @endif
+
     <h4>{{ $project->copydecks->count() }} Copydecks</h4>
     <table>
         <thead>
@@ -59,6 +60,42 @@
             @endforelse
         </tbody>
     </table>
+
+    <h4>Discussions</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th width="100">Number of messages</th>
+            <th width="150">Date last message</th>
+            <th width="150">Date first message</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($project->discussions as $discussion)
+            <tr>
+                <td><a href="{{ route('discussion.show', [$discussion->id]) }}">{{ $discussion->title }}</a></td>
+                <td>{{ $discussion->direct_messages->count() }}</td>
+
+                <?php $lastMessage = $discussion->direct_messages()->orderBy('created_at', 'desc')->first(); ?>
+                <td>@if($lastMessage) {{ date('d M Y', strtotime($lastMessage->created_at->toDateTimeString())) }} @else None @endif</td>
+                <td>{{ date('d M Y', strtotime($discussion->created_at->toDateTimeString())) }}</td>
+                <td>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5">No discussion in this project.</td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
+    @if(\Auth::user()->hasRight(\App\Right::CREATE_DISCUSSION))
+        <a class="button tiny round left" href="{{ route('project.discussion.create', $project->id) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Create new discussion</a>
+    @endif
+    <br/><br/>
+
     @if($designchart)
     <?php $bodysass = 'body {
 ';

@@ -35,6 +35,11 @@ class Right extends Model {
     const RIGHT_MODIFY = 28;
     const RIGHT_DELETE = 29;
     const ACCESS_ADMIN = 30;
+    const CREATE_DISCUSSION = 31;
+    const DELETE_DISCUSSION = 32;
+    const POST_MESSAGE = 33;
+    const EDIT_MESSAGE = 34;
+    const DELETE_MESSAGE = 35;
 
     public function roles(){
         return $this->belongsToMany('App\Role', 'roles_rights');
