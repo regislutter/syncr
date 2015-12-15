@@ -1329,7 +1329,7 @@ $icon-font-path: '../fonts/';
   font-size: 16px;
 }
 
-.fi-iconic-size-md:before {
+[class*='fi-'].iconic-size-md:before {
   font-size: 32px;
 }
 

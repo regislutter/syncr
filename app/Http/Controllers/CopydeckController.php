@@ -47,7 +47,8 @@ class CopydeckController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:projects|max:255',
-            'link' => 'required',
+            'link' => 'required_without:tinycontent',
+            'tinycontent' => 'not_with:link',
             'version1' => 'required',
             'version2' => 'required'
         ]);
@@ -59,6 +60,7 @@ class CopydeckController extends Controller
 
         $file = new File;
         $file->link = $request->input('link');
+        $file->content = $request->input('tinycontent');
         $file->version = $version;
         $file->user_id = Auth::user()->id;
 

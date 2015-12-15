@@ -18,7 +18,9 @@
     {!! Form::open(array('url' => route('file.create', [$copydeck->project_id, $copydeck->id]))) !!}
 
     <a href="#" class="findPath label round right">Where to find the server path ?</a>
-    {!! Form::label('link', 'Server path:') !!} {!! Form::text('link') !!}
+    {!! Form::label('link', 'Server path:') !!} {!! Form::text('link') !!}<br/>
+
+    {!! Form::label('tinycontent', 'Online content:') !!} {!! Form::textarea('tinycontent') !!}<br/>
 
     <?php $lastVersion = $copydeck->files->last()->version;
     $pointPos = strpos($lastVersion, '.');
@@ -52,9 +54,14 @@
         <div class="large-6 columns">
             Last version: {{ $lastVersion }}
         </div>
-    </div><br/>
-    <a class="button small round secondary" href="{{ route('copydeck.show', $copydeck->id) }}">Cancel</a>
-    {!! Form::submit('Create new version', array('class' => 'button small round success')) !!}
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <a class="button small round secondary" href="{{ route('copydeck.show', $copydeck->id) }}">Cancel</a>
+            {!! Form::submit('Create new version', array('class' => 'button small round success')) !!}
+        </div>
+    </div>
+
 
     {!! Form::close() !!}
 @stop

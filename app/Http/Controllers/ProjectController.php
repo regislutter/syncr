@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DesignChart;
 use Illuminate\Http\Request;
 
 use App\Client;
@@ -49,12 +50,67 @@ class ProjectController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:projects|max:255',
-            'client' => 'required|integer|min:1'
+            'client' => 'required|integer|min:1',
+
+            'font_serif' => 'max:255',
+            'font_sans_serif' => 'max:255',
+            'font_size' => 'integer|min:1|max:255',
+            'line_height' => 'integer|min:1|max:255',
+
+            'background_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'primary_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'secondary_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'info_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'success_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'warning_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'alert_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+
+            'title_h1_font' => 'max:255',
+            'title_h1_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h1_font-size' => 'integer|min:1|max:255',
+            'title_h1_line-height' => 'integer|min:1|max:255',
+
+            'title_h2_font' => 'max:255',
+            'title_h2_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h2_font-size' => 'integer|min:1|max:255',
+            'title_h2_line-height' => 'integer|min:1|max:255',
+
+            'title_h3_font' => 'max:255',
+            'title_h3_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h3_font-size' => 'integer|min:1|max:255',
+            'title_h3_line-height' => 'integer|min:1|max:255',
+
+            'title_h4_font' => 'max:255',
+            'title_h4_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h4_font-size' => 'integer|min:1|max:255',
+            'title_h4_line-height' => 'integer|min:1|max:255',
+
+            'title_h5_font' => 'max:255',
+            'title_h5_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h5_font-size' => 'integer|min:1|max:255',
+            'title_h5_line-height' => 'integer|min:1|max:255',
+
+            'title_h6_font' => 'max:255',
+            'title_h6_color' => 'max:6|regex:^[a-f0-9]{6}^',
+            'title_h6_font-size' => 'integer|min:1|max:255',
+            'title_h6_line-height' => 'integer|min:1|max:255',
+
+            'text_font' => 'max:255',
+            'text_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'text_font_size' => 'integer|min:1|max:255',
+            'text_line_height' => 'integer|min:1|max:255',
+
+            'breakpoint_mobile' => 'integer|min:320|max:2048',
+            'breakpoint_tablet' => 'integer|min:320|max:2048',
+            'breakpoint_desktop' => 'integer|min:320|max:2048',
         ]);
+
+        $designChart = DesignChart::create($request->all());
 
         $project = new Project;
         $project->name = $request->input('name');
         $project->client_id = $request->input('client');
+        $project->designchart_id = $designChart->id;
         $project->save();
 
         return redirect()->route('project.show', $project->id);
@@ -68,7 +124,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return view('projects.show', ['project' => Project::find($id)]);
+        $project = Project::find($id);
+        return view('projects.show', ['project' => $project, 'designchart' => $project->designchart()->first()]);
     }
 
     /**
@@ -79,11 +136,28 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        // Get all clients
         $clientsList = [0 => 'Select a client'];
         foreach(Client::all() as $client){
             $clientsList[$client->id] = $client->name;
         }
-        return view('projects.edit', ['project' => Project::find($id), 'clientsList' => $clientsList]);
+
+        // Get project
+        $project = Project::find($id);
+
+        // Copy the design chart data in the project Model to automatically fill the form
+        $designchart = $project->designchart()->first();
+        if($designchart){
+            $attrs = $designchart->getAttributes();
+            foreach($attrs as $name => $value) {
+                if($name != 'id'){
+                    $project->$name = $value;
+                }
+            }
+        }
+
+        // Load view
+        return view('projects.edit', ['project' => $project, 'clientsList' => $clientsList]);
     }
 
     /**
@@ -96,13 +170,77 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|unique:projects|max:255',
-            'client' => 'required|integer|min:1'
+            'name' => 'required|max:255|unique:projects,id,'.$id,
+            'client' => 'required|integer|min:1',
+
+            'font_serif' => 'max:255',
+            'font_sans_serif' => 'max:255',
+            'font_size' => 'integer|min:1|max:255',
+            'line_height' => 'integer|min:1|max:255',
+
+            'background_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'primary_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'secondary_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'info_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'success_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'warning_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'alert_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+
+            'title_h1_font' => 'max:255',
+            'title_h1_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h1_font-size' => 'integer|min:1|max:255',
+            'title_h1_line-height' => 'integer|min:1|max:255',
+
+            'title_h2_font' => 'max:255',
+            'title_h2_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h2_font-size' => 'integer|min:1|max:255',
+            'title_h2_line-height' => 'integer|min:1|max:255',
+
+            'title_h3_font' => 'max:255',
+            'title_h3_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h3_font-size' => 'integer|min:1|max:255',
+            'title_h3_line-height' => 'integer|min:1|max:255',
+
+            'title_h4_font' => 'max:255',
+            'title_h4_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h4_font-size' => 'integer|min:1|max:255',
+            'title_h4_line-height' => 'integer|min:1|max:255',
+
+            'title_h5_font' => 'max:255',
+            'title_h5_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'title_h5_font-size' => 'integer|min:1|max:255',
+            'title_h5_line-height' => 'integer|min:1|max:255',
+
+            'title_h6_font' => 'max:255',
+            'title_h6_color' => 'max:6|regex:^[a-f0-9]{6}^',
+            'title_h6_font-size' => 'integer|min:1|max:255',
+            'title_h6_line-height' => 'integer|min:1|max:255',
+
+            'text_font' => 'max:255',
+            'text_color' => 'max:6|regex:^[a-fA-F0-9]{6}^',
+            'text_font_size' => 'integer|min:1|max:255',
+            'text_line_height' => 'integer|min:1|max:255',
+
+            'breakpoint_mobile' => 'integer|min:320|max:2048',
+            'breakpoint_tablet' => 'integer|min:320|max:2048',
+            'breakpoint_desktop' => 'integer|min:320|max:2048',
         ]);
 
+        // Find project
         $project = Project::find($id);
+
+        // Update project design chart
+        $designchart = $project->designchart()->first();
+        if($designchart){
+            $designchart->update($request->all());
+        }else{
+            $designchart = DesignChart::create($request->all());
+        }
+
+        // Update project
         $project->name = $request->input('name');
         $project->client_id = $request->input('client');
+        $project->designchart_id = $designchart->id;
         $project->save();
 
         return redirect()->route('project.show', $id);

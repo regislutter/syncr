@@ -4,6 +4,7 @@
         <title>{{ config('app.name') }} - @yield('title')</title>
         {!! HTML::style('css/sweetalert.css') !!}
         {!! HTML::style('css/app.css') !!}
+        {!! HTML::style('css/espresso-theme.css') !!}
     </head>
     <body>
         <nav class="top-bar" data-topbar role="navigation">
@@ -64,7 +65,16 @@
         {!! HTML::script('js/foundation.min.js') !!}
         {!! HTML::script('js/iconic.min.js') !!}
         {!! HTML::script('js/sweetalert.min.js') !!}
+        {!! HTML::script('js/rainbow.min.js') !!}
+        {!! HTML::script('js/rainbow-generic.js') !!}
+        {!! HTML::script('js/rainbow-css.js') !!}
         {!! HTML::script('js/zeroclipboard/ZeroClipboard.js') !!}
+        <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+        <script>
+            tinymce.init({
+                selector: '#tinycontent'
+            });
+        </script>
         <script type="text/javascript">
             $(document).foundation();
             $(document).ready(function(){
@@ -108,7 +118,7 @@
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Ye= s, delete it!",
+                        confirmButtonText: "Yes, delete it!",
                         closeOnConfirm: false
                     }, function(){
                         $.ajax({

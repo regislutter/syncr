@@ -42,7 +42,8 @@ class FileController extends Controller
     public function store(Request $request, $project_id, $copydeck_id)
     {
         $this->validate($request, [
-            'link' => 'required',
+            'link' => 'required_without:tinycontent',
+            'tinycontent' => 'not_with:link',
             'version1' => 'required',
             'version2' => 'required'
         ]);
@@ -53,6 +54,7 @@ class FileController extends Controller
 
         $file = new File;
         $file->link = $request->input('link');
+        $file->content = $request->input('tinycontent');
         $file->version = $version;
         $file->user_id = Auth::user()->id;
         Copydeck::find($copydeck_id)->files()->save($file);
@@ -66,9 +68,10 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($copydeck_id, $id)
+    public function show($id)
     {
-        //
+        $file = File::find($id);
+        return view('files.show', ['file' => $file, 'copydeck' => $file->copydeck]);
     }
 
     /**
@@ -77,9 +80,10 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($copydeck_id, $id)
+    public function edit($id)
     {
-        //
+        $file = File::find($id);
+        return view('files.edit', ['file' => $file, 'copydeck' => $file->copydeck]);
     }
 
     /**
@@ -89,9 +93,20 @@ class FileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $copydeck_id, $id)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'link' => 'required_without:tinycontent',
+            'tinycontent' => 'not_with:link'
+        ]);
+
+        $file = File::find($id);
+        $file->link = $request->input('link');
+        $file->content = $request->input('tinycontent');
+        $file->user_id = Auth::user()->id;
+        $file->save();
+
+        return redirect()->route('copydeck.show', $file->copydeck->id);
     }
 
     /**

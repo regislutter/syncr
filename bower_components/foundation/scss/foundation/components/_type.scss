@@ -304,7 +304,7 @@ $align-class-breakpoints:
       line-height: inherit;
     }
 
-    code {
+    code:not(.rainbow) {
       background-color: $code-background-color;
       border-color: $code-border-color;
       border-style: $code-border-style;

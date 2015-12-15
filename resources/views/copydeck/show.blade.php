@@ -29,7 +29,11 @@
             <tr>
             @endif
                 <td>
-                    {{ substr($file->link, strrpos($file->link, '/')+1) }}
+                    @if(empty($file->link))
+                        <a href="{{ route('file.show', $file->id) }}"><strong>Online version</strong></a>
+                    @else
+                        {{ substr($file->link, strrpos($file->link, '/')+1) }}
+                    @endif
                 </td>
                 <td class="center">{{ $file->version }}</td>
                 <td>{{ $file->getStatusText() }}</td>
@@ -39,6 +43,9 @@
                     <a class="copy-button label round" data-clipboard-text="{{ substr($file->link, 0, strrpos($file->link, '/')) }}" title="Click to copy the path."><span class="fi-browser-type-chrome" title="chrome" aria-hidden="true"></span> Other browsers</a>
                 </td>
                 <td>
+                    @if(empty($file->link) && \Auth::user()->hasRight(\App\Right::VERSION_MODIFY) && $file->status == \App\File::STATUS_IN_EDITION)
+                        <a href="{{ route('file.edit', $file->id) }}" class="button tiny">Modify</a>
+                    @endif
                     @if(\Auth::user()->hasRight(\App\Right::VERSION_STATUS_TO_IN_EDITION) && $file->status == \App\File::STATUS_READY)
                         <a href="{{ route('file.status', [$file->id, \App\File::STATUS_IN_EDITION]) }}" class="button tiny warning"><span class="fi-pencil" title="edition" aria-hidden="true"></span> Back to edition</a>
                     @endif

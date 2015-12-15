@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'not_with' => 'The :attribute field can not be field with the server path.',
+
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',
     'after'                => 'The :attribute must be a date after :date.',
@@ -89,9 +91,6 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
     ],
 
     /*

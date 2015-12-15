@@ -20,6 +20,9 @@
     {!! Form::label('name', 'Name:') !!} {!! Form::text('name') !!}<br/>
     <a href="#" class="findPath label round right">Where to find the server path ?</a>
     {!! Form::label('link', 'Server path:') !!} {!! Form::text('link') !!}<br/>
+
+    {!! Form::label('tinycontent', 'Online content:') !!} {!! Form::textarea('tinycontent') !!}<br/>
+
     <div class="row collapse">
         <div class="large-1 columns">
             <label for="version">Version:</label>

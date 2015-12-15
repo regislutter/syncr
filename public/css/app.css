@@ -8662,7 +8662,7 @@ small {
   line-height: inherit;
 }
 
-code {
+code:not(.rainbow) {
   background-color: #f8f8f8;
   border-color: #dfdfdf;
   border-style: solid;
@@ -11874,7 +11874,7 @@ th.hide-for-touch {
   font-size: 16px;
 }
 
-.fi-iconic-size-md:before {
+[class*='fi-'].iconic-size-md:before {
   font-size: 32px;
 }
 
@@ -14535,6 +14535,14 @@ button {
   margin: 0.2rem;
 }
 
+span.icon-bigger,
+span.icon-bigger:before {
+  position: relative;
+  top: 1px;
+  font-size: 1.2rem;
+  line-height: .8rem;
+}
+
 /* Tables */
 
 table {
@@ -14558,16 +14566,6 @@ table td.center {
 table th.right,
 table td.right {
   text-align: right;
-}
-
-table span.icon-bigger,
-table span.icon-bigger {
-  font-size: 1.2rem;
-}
-
-.row:before,
-.row:after {
-  display: inline-block;
 }
 
 div.small,
@@ -14596,6 +14594,10 @@ img.avatar {
 img.avatar.small {
   max-width: 50px;
   max-height: 50px;
+}
+
+.invert-color-text {
+  mix-blend-mode: difference;
 }
 
 /* Icons animations */

@@ -38,6 +38,13 @@ ul li {
     margin: 0.2rem;
 }
 
+span.icon-bigger, span.icon-bigger:before {
+    position: relative;
+    top: 1px;
+    font-size: 1.2rem;
+    line-height: .8rem;
+}
+
 /* Tables */
 table {
     width: 100%;
@@ -55,13 +62,10 @@ table {
             text-align: right;
         }
     }
-    span.icon-bigger, span.icon-bigger {
-        font-size: 1.2rem;
-    }
 }
-.row:before, .row:after {
-    display: inline-block;
-}
+//.row:before, .row:after {
+//    display: inline-block;
+//}
 
 div.small, span.small {
     font-size: 0.7rem;
@@ -89,6 +93,10 @@ img.avatar {
         max-width: 50px;
         max-height: 50px;
     }
+}
+
+.invert-color-text {
+    mix-blend-mode: difference;
 }
 
 /* Icons animations */
