@@ -3,7 +3,11 @@
 @section('title', 'New message in discussion')
 
 @section('content')
-    <h1>New message in discussion: {{ $discussion->title }}</h1>
+    <h1>Respond to message:</h1>
+
+    <div class="panel">
+        {!! $message->content !!}
+    </div>
 
     @if (count($errors) > 0)
         <div>
@@ -15,12 +19,12 @@
         </div>
     @endif
 
-    {!! Form::open(array('url' => route('discussion.message.create', [$discussion->id]))) !!}
+    {!! Form::open(array('url' => route('discussion.message.respond', [$discussion->id, $message->id]))) !!}
 
     {!! Form::label('tinycontent', 'Message:') !!} {!! Form::textarea('tinycontent') !!}<br/>
 
     <a class="button small round secondary" href="{{ route('discussion.show', $discussion->id) }}">Cancel</a>
-    {!! Form::submit('Send new message', ['class' => 'button small round success']) !!}
+    {!! Form::submit('Respond to message', ['class' => 'button small round success']) !!}
 
     {!! Form::close() !!}
 @stop

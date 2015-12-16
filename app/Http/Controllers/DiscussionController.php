@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Copydeck;
 use App\Project;
+use App\Discussion;
+use App\Message;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -94,6 +96,47 @@ class DiscussionController extends Controller
         return redirect()->route('discussion.show', $discussion->id);
     }
 
+    // Create message
+
+    public function createMessage($discussionId){
+        return view('discussion.message.create', ['discussion' => Discussion::find($discussionId)]);
+    }
+
+    public function storeMessage($discussionId, Request $request){
+        $this->validate($request, [
+            'tinycontent' => 'required',
+        ]);
+
+        $message = new Message;
+        $message->content = $request->input('tinycontent');
+        $message->discussion_id = $discussionId;
+        $message->user_id = Auth::user()->id;
+        $message->save();
+
+        return redirect()->route('discussion.show', $discussionId);
+    }
+
+    // Respond to message
+
+    public function createResponse($discussionId, $messageId){
+        return view('discussion.message.respond', ['discussion' => Discussion::find($discussionId), 'message' => Message::find($messageId)]);
+    }
+
+    public function storeResponse($discussionId, $messageId, Request $request){
+        $this->validate($request, [
+            'tinycontent' => 'required',
+        ]);
+
+        $message = new Message;
+        $message->content = $request->input('tinycontent');
+        $message->discussion_id = $discussionId;
+        $message->message_id = $messageId;
+        $message->user_id = Auth::user()->id;
+        $message->save();
+
+        return redirect()->route('discussion.show', $discussionId);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -102,7 +145,7 @@ class DiscussionController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('discussion.show', ['discussion' => Discussion::find($id)]);
     }
 
     /**

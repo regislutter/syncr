@@ -70,10 +70,44 @@
         @endforelse
         </tbody>
     </table>
-    <h4>Discussion</h4>
-    <div class="panel">
-        <span class="round label">Coming soon...</span>
-    </div>
+
+    <h4>Discussions</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th width="100">Number of messages</th>
+            <th width="150">Date last message</th>
+            <th width="150">Date first message</th>
+            <th width="150">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($copydeck->discussions as $discussion)
+            <tr>
+                <td><a href="{{ route('discussion.show', [$discussion->id]) }}">{{ $discussion->title }}</a></td>
+                <td>{{ $discussion->direct_messages->count() }}</td>
+
+                <?php $lastMessage = $discussion->direct_messages()->orderBy('created_at', 'desc')->first(); ?>
+                <td>@if($lastMessage) {{ date('d M Y', strtotime($lastMessage->created_at->toDateTimeString())) }} @else None @endif</td>
+                <td>{{ date('d M Y', strtotime($discussion->created_at->toDateTimeString())) }}</td>
+                <td>
+                    @if(\Auth::user()->hasRight(\App\Right::DELETE_DISCUSSION))
+                        <a class="button tiny round alert" href="#">Close</a>
+                    @endif
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5">No discussion in this copydeck. <a href="{{ route('copydeck.discussion.create', [$copydeck->project->id, $copydeck->id]) }}">Open the first discussion</a></td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
+    @if(\Auth::user()->hasRight(\App\Right::CREATE_DISCUSSION))
+        <a class="button tiny round left" href="{{ route('copydeck.discussion.create', [$copydeck->project->id, $copydeck->id]) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Create new discussion</a>
+    @endif
+    <br/><br/>
     <h4>Other actions</h4>
     @if(\Auth::user()->hasRight(\App\Right::COPYDECK_MODIFY))
         <a class="button tiny round" href="{{ route('copydeck.edit', $copydeck->id) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit copydeck</a>

@@ -10,7 +10,7 @@ class Message extends Model
         return $this->belongsTo('App\Discussion');
     }
 
-    public function author(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
 

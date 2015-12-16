@@ -23,6 +23,6 @@ class Discussion extends Model
     }
 
     public function direct_messages(){
-        return $this->hasMany('App\Message')->whereNotNull('message_id');
+        return $this->hasMany('App\Message')->whereNull('message_id');
     }
 }

@@ -54,6 +54,10 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     Route::get('project/{project}/copydeck/{copydeck}/discussion/create', ['as' => 'copydeck.discussion.create', 'uses' => 'DiscussionController@createCopydeck']);
     Route::post('project/{project}/copydeck/{copydeck}/discussion/create', ['as' => 'copydeck.discussion.create', 'uses' => 'DiscussionController@storeCopydeck']);
     Route::resource('message', 'MessageController');
+    Route::get('discussion/{discussion}/message/create', ['as' => 'discussion.message.create', 'uses' => 'DiscussionController@createMessage']);
+    Route::post('discussion/{discussion}/message/create', ['as' => 'discussion.message.create', 'uses' => 'DiscussionController@storeMessage']);
+    Route::get('discussion/{discussion}/message/{message}/respond', ['as' => 'discussion.message.respond', 'uses' => 'DiscussionController@createResponse']);
+    Route::post('discussion/{discussion}/message/{message}/respond', ['as' => 'discussion.message.respond', 'uses' => 'DiscussionController@storeResponse']);
     // Notification
     Route::resource('notification', 'NotificationController');
     // Role

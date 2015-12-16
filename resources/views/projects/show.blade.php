@@ -69,7 +69,7 @@
             <th width="100">Number of messages</th>
             <th width="150">Date last message</th>
             <th width="150">Date first message</th>
-            <th>Action</th>
+            <th width="150">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -82,11 +82,14 @@
                 <td>@if($lastMessage) {{ date('d M Y', strtotime($lastMessage->created_at->toDateTimeString())) }} @else None @endif</td>
                 <td>{{ date('d M Y', strtotime($discussion->created_at->toDateTimeString())) }}</td>
                 <td>
+                    @if(\Auth::user()->hasRight(\App\Right::DELETE_DISCUSSION))
+                        <a class="button tiny round alert" href="#">Close</a>
+                    @endif
                 </td>
             </tr>
         @empty
             <tr>
-                <td colspan="5">No discussion in this project.</td>
+                <td colspan="5">No discussion in this project. <a href="{{ route('project.discussion.create', $project->id) }}">Open the first discussion</a></td>
             </tr>
         @endforelse
         </tbody>
