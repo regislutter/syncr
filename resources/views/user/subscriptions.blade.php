@@ -13,8 +13,12 @@
         </tr>
         </thead>
         <tbody>
-        <?php $noSub = true; ?>
+        <?php $noSub = true; $i = 0; ?>
         @forelse($user->subscriptions as $sub)
+            <?php if($sub->project == null){
+                $sub->destroy($sub->id);
+                continue;
+            } ?>
             @if($sub->project->archived == 0)
                 <?php $project = $sub->project; $noSub = false; ?>
                 <tr>

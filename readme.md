@@ -1,3 +1,19 @@
+# Syncr
+
+Syncr is a web project manager with many tools to manage your projects, documents and graphical charter, track them, etc.
+
+Some examples of what you can do:
+
+* Manage clients and projects
+* Create a project with a graphical charter: Designers and developers are friends again!
+* Edit a document online (with TinyMCE for a WordPress-like interface)
+* Upload a document with his URL to a internal or external path
+* Track documents for any new version: Redactors and developers are friends again!
+* Change the status of a document: In edition, ready for development, in development, deployed
+* Discuss on project or documents
+* Archive projects and clients
+* Manage user roles and rights
+
 ## Gulp
 
 This project use Gulp (included with Laravel) and Elixir (Laravel's gulp tool) to build the application: [Elixir documentation](http://laravel.com/docs/5.1/elixir)

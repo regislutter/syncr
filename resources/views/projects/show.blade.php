@@ -161,7 +161,7 @@ p {
                 Font Sans Serif: {{ $designchart->font_sans_serif }}<br/>
             @endif
             @if($designchart->font_size != null)
-                <?php $bodysass .= '    rem(\'font-size\', '.$designchart->font_size.'px);
+                <?php $bodysass .= '    @include rem(\'font-size\', '.$designchart->font_size.'px);
 '; ?>
                 Font size: {{ $designchart->font_size }}px<br/>
             @endif
@@ -173,7 +173,7 @@ p {
                 Font Serif: {{ $designchart->font_serif }}<br/>
             @endif
             @if($designchart->line_height != null)
-                <?php $bodysass .= '    rem(\'line-height\', '.$designchart->line_height.'px);
+                <?php $bodysass .= '    @include rem(\'line-height\', '.$designchart->line_height.'px);
 '; ?>
                 Line height: {{ $designchart->line_height }}px<br/>
             @endif
@@ -258,14 +258,14 @@ p {
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->text_font_size != null)
-                <?php $fontsass .= '    rem(\'font-size\', '.$designchart->text_font_size.'px);
+                <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->text_font_size.'px);
 '; ?>
                 Font size: {{ $designchart->text_font_size }}px<br/>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->text_line_height != null)
-                <?php $fontsass .= '    rem(\'line-height\', '.$designchart->text_line_height.'px);
+                <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->text_line_height.'px);
 '; ?>
                 Line height: {{ $designchart->text_line_height }}px<br/>
             @endif
@@ -296,6 +296,8 @@ p {
         </div>
     </div>
     @if($displayH1)
+        <?php $titlesass .= 'h1 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H1</h6>
@@ -305,26 +307,38 @@ p {
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h1_font != null)
                 Font: {{ $designchart->title_h1_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h1_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h1_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h1_color }};"><span class="invert-color-text">#{{ $designchart->title_h1_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h1_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h1_font_size != null)
                 Font size: {{ $designchart->title_h1_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h1_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h1_line_height != null)
                 Line height: {{ $designchart->title_h1_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h1_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     @if($displayH2)
+        <?php $titlesass .= 'h2 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H2</h6>
@@ -333,27 +347,39 @@ p {
     <div class="row">
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h2_font != null)
-                Font: {{ $designchart->title_h1_font }}<br/>
+                Font: {{ $designchart->title_h2_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h2_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h2_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h2_color }};"><span class="invert-color-text">#{{ $designchart->title_h2_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h2_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h2_font_size != null)
                 Font size: {{ $designchart->title_h2_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h2_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h2_line_height != null)
-                Line height: {{ $designchart->title_h1_line_height }}px<br/>
+                Line height: {{ $designchart->title_h2_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h2_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     @if($displayH3)
+        <?php $titlesass .= 'h3 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H3</h6>
@@ -363,26 +389,38 @@ p {
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h3_font != null)
                 Font: {{ $designchart->title_h3_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h3_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h3_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h3_color }};"><span class="invert-color-text">#{{ $designchart->title_h3_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h3_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h3_font_size != null)
                 Font size: {{ $designchart->title_h3_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h3_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h3_line_height != null)
                 Line height: {{ $designchart->title_h3_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h3_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     @if($displayH4)
+        <?php $titlesass .= 'h4 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H4</h6>
@@ -392,26 +430,38 @@ p {
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h4_font != null)
                 Font: {{ $designchart->title_h4_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h4_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h4_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h4_color }};"><span class="invert-color-text">#{{ $designchart->title_h4_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h4_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h4_font_size != null)
                 Font size: {{ $designchart->title_h4_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h4_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h4_line_height != null)
                 Line height: {{ $designchart->title_h4_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h4_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     @if($displayH5)
+        <?php $titlesass .= 'h5 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H5</h6>
@@ -421,26 +471,38 @@ p {
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h5_font != null)
                 Font: {{ $designchart->title_h5_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h5_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h5_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h5_color }};"><span class="invert-color-text">#{{ $designchart->title_h5_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h5_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h5_font_size != null)
                 Font size: {{ $designchart->title_h5_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h5_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h5_line_height != null)
                 Line height: {{ $designchart->title_h5_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h5_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     @if($displayH6)
+        <?php $titlesass .= 'h6 {
+'; ?>
     <div class="row">
         <div class="large-12 columns">
             <h6>Title H6</h6>
@@ -450,24 +512,34 @@ p {
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h6_font != null)
                 Font: {{ $designchart->title_h6_font }}<br/>
+                <?php $titlesass .= '   font-family: \''.$designchart->title_h6_font.'\';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h6_color != null)
                 Color: <span class="label round" style="background-color:#{{ $designchart->title_h6_color }};"><span class="invert-color-text">#{{ $designchart->title_h6_color }}</span></span><br/>
+                <?php $titlesass .= '   color: #'.$designchart->title_h6_color.';
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h6_font_size != null)
                 Font size: {{ $designchart->title_h6_font_size }}px<br/>
+                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h6_font_size.'px);
+'; ?>
             @endif
         </div>
         <div class="large-3 medium-3 columns">
             @if($designchart->title_h6_line_height != null)
                 Line height: {{ $designchart->title_h6_line_height }}px<br/>
+                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h6_line_height.'px);
+'; ?>
             @endif
         </div>
     </div>
+    <?php $titlesass .= '}
+'; ?>
     @endif
     <br/>
     @endif
