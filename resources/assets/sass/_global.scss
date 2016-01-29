@@ -102,6 +102,19 @@ img.avatar {
     mix-blend-mode: difference;
 }
 
+/* Accordion */
+.accordion {
+    .accordion-navigation {
+        clear: both;
+
+        .content {
+            .button:last-of-type{
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
 /* Icons animations */
 @include keyframes(blink){
     0% { opacity: 1; }

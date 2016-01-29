@@ -61,6 +61,10 @@
         </tbody>
     </table>
 
+    <ul class="accordion" data-accordion>
+        <li class="accordion-navigation">
+            <a href="#panel1a">Discussions</a>
+            <div id="panel1a" class="content">
     <h4>Discussions</h4>
     <table>
         <thead>
@@ -97,7 +101,12 @@
     @if(\Auth::user()->hasRight(\App\Right::CREATE_DISCUSSION))
         <a class="button tiny round left" href="{{ route('project.discussion.create', $project->id) }}"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Create new discussion</a>
     @endif
-    <br/><br/>
+                <br/><br/>
+            </div>
+        </li>
+        <li class="accordion-navigation">
+            <a href="#panel2a">Design chart</a>
+            <div id="panel2a" class="content">
 
     @if($designchart)
     <?php $bodysass = 'body {
@@ -606,7 +615,9 @@ p {
             </pre>
         </div>
     </div>
-    <br/>
+            </div>
+        </li>
+    </ul>
     @endif
     <h4>Other actions</h4>
     @if(\Auth::user()->hasRight(\App\Right::PROJECT_MODIFY))

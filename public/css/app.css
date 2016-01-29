@@ -14514,6 +14514,10 @@ h6 {
   background: #9DE0AD;
 }
 
+table a.label {
+  margin-top: 2px;
+}
+
 a.label.round:hover {
   background: #556270;
   color: #FFF;
@@ -14598,6 +14602,16 @@ img.avatar.small {
 
 .invert-color-text {
   mix-blend-mode: difference;
+}
+
+/* Accordion */
+
+.accordion .accordion-navigation {
+  clear: both;
+}
+
+.accordion .accordion-navigation .content .button:last-of-type {
+  margin-bottom: 20px;
 }
 
 /* Icons animations */
