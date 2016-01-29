@@ -14,6 +14,16 @@ Some examples of what you can do:
 * Archive projects and clients
 * Manage user roles and rights
 
+## TODO List
+
+* Export/Import the files to Word and/or PDF: Using [phpDocx](http://www.phpdocx.com/) and [FPDF](http://www.fpdf.org/?lang=en)
+* Add a file versions comparator: Using [JSdiff](https://github.com/kpdecker/jsdiff) (Delete HTML before: http://stackoverflow.com/questions/822452/strip-html-from-text-javascript)
+* Add deadlines to projects (design, RLF, development, delivery) and a calendar with deadlines from followed projects
+* Disable delete client
+* Delete linked subscriptions when deleting a project
+* Path to a folder/server for each project
+* Link/API with external applications (Redmine, etc.)
+
 ## Gulp
 
 This project use Gulp (included with Laravel) and Elixir (Laravel's gulp tool) to build the application: [Elixir documentation](http://laravel.com/docs/5.1/elixir)
