@@ -14610,6 +14610,43 @@ img.avatar.small {
   clear: both;
 }
 
+.accordion .accordion-navigation > a {
+  position: relative;
+}
+
+.accordion .accordion-navigation > a:before,
+.accordion .accordion-navigation > a:after {
+  position: absolute;
+  right: 25px;
+  top: 22px;
+  content: "";
+  transition: all 0.25s ease-in-out;
+  position: absolute;
+  background-color: #45ADA8;
+  width: 1px;
+  height: 12px;
+}
+
+.accordion .accordion-navigation > a:before {
+  -webkit-transform: translate3d(4px, 0, 0) rotate3d(0, 0, 1, 45deg);
+  transform: translate3d(4px, 0, 0) rotate3d(0, 0, 1, 45deg);
+}
+
+.accordion .accordion-navigation > a:after {
+  -webkit-transform: translate3d(-4px, 0, 0) rotate3d(0, 0, 1, -45deg);
+  transform: translate3d(-4px, 0, 0) rotate3d(0, 0, 1, -45deg);
+}
+
+.accordion .accordion-navigation.active > a:before {
+  -webkit-transform: translate3d(-6px, 0, 0) rotate3d(0, 0, 1, 45deg);
+  transform: translate3d(-6px, 0, 0) rotate3d(0, 0, 1, 45deg);
+}
+
+.accordion .accordion-navigation.active > a:after {
+  -webkit-transform: translate3d(2px, 0, 0) rotate3d(0, 0, 1, -45deg);
+  transform: translate3d(2px, 0, 0) rotate3d(0, 0, 1, -45deg);
+}
+
 .accordion .accordion-navigation .content .button:last-of-type {
   margin-bottom: 20px;
 }

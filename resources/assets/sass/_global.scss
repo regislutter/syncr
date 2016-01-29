@@ -107,6 +107,42 @@ img.avatar {
     .accordion-navigation {
         clear: both;
 
+        > a {
+            position: relative;
+            &:before, &:after {
+                position: absolute;
+                right: 25px;
+                top: 22px;
+                content: "";
+                -webkit-transition: all 0.25s ease-in-out;
+                transition: all 0.25s ease-in-out;
+                position: absolute;
+                background-color: $primary-color;
+                width: 1px;
+                height: 12px;
+            }
+
+            &:before {
+                -webkit-transform: translate3d(4px, 0, 0) rotate3d(0, 0, 1, 45deg);
+                transform: translate3d(4px, 0, 0) rotate3d(0, 0, 1, 45deg);
+            }
+            &:after {
+                -webkit-transform: translate3d(-4px, 0, 0) rotate3d(0, 0, 1, -45deg);
+                transform: translate3d(-4px, 0, 0) rotate3d(0, 0, 1, -45deg);
+            }
+        }
+
+        &.active > a {
+            &:before {
+                -webkit-transform: translate3d(-6px, 0, 0) rotate3d(0, 0, 1, 45deg);
+                transform: translate3d(-6px, 0, 0) rotate3d(0, 0, 1, 45deg);
+            }
+            &:after {
+                -webkit-transform: translate3d(2px, 0, 0) rotate3d(0, 0, 1, -45deg);
+                transform: translate3d(2px, 0, 0) rotate3d(0, 0, 1, -45deg);
+            }
+        }
+
         .content {
             .button:last-of-type{
                 margin-bottom: 20px;
