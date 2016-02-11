@@ -1,5 +1,10 @@
 # Syncr
 
+[![PHP Version](https://img.shields.io/badge/PHP-v5.6.10-4F5B93.svg)](http://php.net/)
+[![Build system](https://img.shields.io/badge/builder-Gulp-cf4646.svg)](https://github.com/gulpjs/gulp)
+[![Framework](https://img.shields.io/badge/framework-Laravel-f4645f.svg)](https://laravel.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://en.wikipedia.org/wiki/MIT_License)
+
 Syncr is a web project manager with many tools to manage your projects, documents and graphical charter, track them, etc.
 
 Some examples of what you can do:
@@ -24,7 +29,7 @@ This project use Gulp (included with Laravel) and Elixir (Laravel's gulp tool) t
 - `gulp --production`: Run all tasks and minify all CSS and JavaScript
 - `gulp watch`: Watch any modification in the assets (SASS files, etc.) and compile them
 
-## Laravel PHP Framework
+## Based on Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
@@ -39,15 +44,3 @@ Laravel is accessible, yet powerful, providing powerful tools needed for large, 
 ### Official Documentation
 
 Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-### Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
