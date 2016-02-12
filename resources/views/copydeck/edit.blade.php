@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Page Title')
+@section('title', 'Edit Document')
 
 @section('content')
-    <h1>Edit copydeck: {{ $copydeck->name }}</h1>
+    <h1>Edit document: {{ $copydeck->name }}</h1>
 
     @if (count($errors) > 0)
         <div>

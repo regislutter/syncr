@@ -9,6 +9,13 @@ h1, h2, h3, h4, h5, h6 {
     color: $secondary;
 }
 
+/* Forms */
+select.inline {
+    display: inline-block;
+    width: auto;
+    padding-right: 25px;
+}
+
 /* Links */
 .top-bar-section .dropdown li.action:not(.has-form):not(.active)>a:not(.button){
     background: darken($success-color, 10%);
@@ -204,4 +211,18 @@ img.avatar {
 }
 .iconic-grid-three-up-item-6 {
     @include animation('color-cherry 5s linear 1s infinite alternate');
+}
+
+.panel ul li {
+    list-style-type: disc;
+}
+
+#comparator {
+    padding: 15px;
+    border: 1px solid $grey;
+    background: #f2f2f2;
+
+    span {
+        padding: 2px;
+    }
 }

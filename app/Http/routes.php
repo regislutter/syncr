@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     Route::get('project/{project}/copydeck/{copydeck}/version/create', ['as' => 'file.create', 'uses' => 'FileController@create']);
     Route::post('project/{project}/copydeck/{copydeck}/version/create', ['as' => 'file.store', 'uses' => 'FileController@store']);
     Route::get('file/{file}/status/{status}', ['as' => 'file.status', 'uses' => 'FileController@changeStatus']);
+    Route::get('file/{file1}/compare/{file2}', ['as' => 'file.compare', 'uses' => 'FileController@compare']);
     // Discussion
     Route::resource('discussion', 'DiscussionController');
     Route::get('project/{project}/discussion/create', ['as' => 'project.discussion.create', 'uses' => 'DiscussionController@createProject']);

@@ -120,6 +120,24 @@ class FileController extends Controller
         //
     }
 
+    /**
+     * Compare 2 versions of a file
+     *
+     * @param $id
+     * @param $otherId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function compare($id, $otherId){
+        return view('files.comparator', ['file1' => File::find($id), 'file2' => File::find($otherId)]);
+    }
+
+    /**
+     * Change status of a file
+     *
+     * @param $id
+     * @param $status
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function changeStatus($id, $status){
         $file = File::find($id);
         $file->status = $status;

@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Create new copydeck')
+@section('title', 'Create new document')
 
 @section('content')
-    <h1>Create new copydeck in {{ $project->name }}</h1>
+    <h1>Create new document in {{ $project->name }}</h1>
 
     @if (count($errors) > 0)
         <div>

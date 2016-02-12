@@ -14503,6 +14503,14 @@ h6 {
   color: #556270;
 }
 
+/* Forms */
+
+select.inline {
+  display: inline-block;
+  width: auto;
+  padding-right: 25px;
+}
+
 /* Links */
 
 .top-bar-section .dropdown li.action:not(.has-form):not(.active) > a:not(.button) {
@@ -14861,6 +14869,20 @@ img.avatar.small {
 .iconic-grid-three-up-item-6 {
   -webkit-animation: color-cherry 5s linear 1s infinite alternate;
   animation: color-cherry 5s linear 1s infinite alternate;
+}
+
+.panel ul li {
+  list-style-type: disc;
+}
+
+#comparator {
+  padding: 15px;
+  border: 1px solid grey;
+  background: #f2f2f2;
+}
+
+#comparator span {
+  padding: 2px;
 }
 
 /* Timeline Legend */

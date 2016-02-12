@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Copydeck : '.$copydeck->name)
+@section('title', 'Document: '.$copydeck->name)
 
 @section('content')
     <h1>{{ $copydeck->name }}</h1>
@@ -22,7 +22,9 @@
         </tr>
         </thead>
         <tbody>
+        <?php $fileVersionsList = []; ?>
         @forelse($copydeck->files->reverse() as $file)
+            <?php $fileVersionsList[$file->id] = $file->version; ?>
             @if($file->id == $copydeck->development_file_id)
             <tr class="enlighten">
             @else
@@ -70,6 +72,12 @@
         @endforelse
         </tbody>
     </table>
+
+    @if(count($fileVersionsList) >= 2)
+    <h4>Compare versions</h4>
+    {!! Form::select('file1', $fileVersionsList, array_keys($fileVersionsList)[1], ['id' => 'file1', 'class' => 'inline']) !!} to {!! Form::select('file2', $fileVersionsList, array_keys($fileVersionsList)[0], ['id' => 'file2', 'class' => 'inline']) !!}
+    <button onclick="var compareURL = '{{ route('file.compare', array('?file1?', '?file2?')) }}'; window.location = compareURL.replace('?file1?', $('#file1').val()).replace('?file2?', $('#file2').val());" id="compareVersions" class="button tiny">Compare</button>
+    @endif
 
     <h4>Discussions</h4>
     <table>
