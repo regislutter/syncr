@@ -84,17 +84,22 @@ class RolesTableSeeder extends Seeder {
             DB::table('roles')->truncate();
             // Create roles and attach rights
             $watcher = Role::create(array('name' => 'Watcher'));
-            $watcher->rights()->attach(7);
+            $watcher->rights()->sync(7);
+
             $editor = Role::create(array('name' => 'Editor'));
-            $editor->rights()->attach([7, 10, 11, 13, 14, 16]);
+            $editor->rights()->sync([7, 10, 11, 13, 14, 16]);
+
             $developer = Role::create(array('name' => 'Developer'));
-            $developer->rights()->attach([10, 11, 13, 14, 18, 19]);
+            $developer->rights()->sync([10, 11, 13, 14, 18, 19]);
+
             $admin = Role::create(array('name' => 'Admin'));
-            $admin->rights()->attach([1, 2, 3, 8, 9, 20, 21 ,22, 23 ,24 ,25, 26, 30]);
+            $admin->rights()->sync([1, 2, 3, 8, 9, 20, 21 ,22, 23 ,24 ,25, 26, 30]);
+
             $superAdmin = Role::create(array('name' => 'Super admin'));
-            $superAdmin->rights()->attach([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]);
+            $superAdmin->rights()->sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35]);
+
             $projectManager = Role::create(array('name' => 'Project Manager'));
-            $projectManager->rights()->attach([1, 2, 3, 4, 5, 6, 7, 8, 9, 17]);
+            $projectManager->rights()->sync([1, 2, 3, 4, 5, 6, 7, 8, 9, 17]);
         }
     }
 }
@@ -114,7 +119,7 @@ class UsersTableSeeder extends Seeder {
                 'password' => Hash::make('W0nd3rfu1')
             ));
             // Make him Super Admin
-            $userAdmin->roles()->attach(5);
+            $userAdmin->roles()->sync(5);
         }
     }
 }
