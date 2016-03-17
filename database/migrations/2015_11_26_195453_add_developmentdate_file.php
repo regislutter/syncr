@@ -13,7 +13,7 @@ class AddDevelopmentdateFile extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->dateTime('status_updated_at')->default(DB::raw('CURRENT_DATETIME'));
+            $table->dateTime('status_updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
