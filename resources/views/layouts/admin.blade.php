@@ -11,12 +11,12 @@
                 @if(\Auth::user()->hasRight(\App\Right::USER_MODIFY))
                 <dd class="{{ \App\Helpers\ActiveRoute::is_active('admin/users') }}"><a href="{{ route('admin.users') }}"><span class="fi-people" title="users" aria-hidden="true"></span> Manage users</a></dd>
                 @endif
-                @if(\Auth::user()->hasRight(\App\Right::ROLE_MODIFY))
+{{--                @if(\Auth::user()->hasRight(\App\Right::ROLE_MODIFY))--}}
                 <dd class="{{ \App\Helpers\ActiveRoute::is_active('admin/roles') }}"><a href="{{ route('admin.roles') }}"><span class="fi-brain" title="roles" aria-hidden="true"></span> Manage roles</a></dd>
-                @endif
-                @if(\Auth::user()->hasRight(\App\Right::RIGHT_CREATE))
+                {{--@endif--}}
+{{--                @if(\Auth::user()->hasRight(\App\Right::RIGHT_CREATE))--}}
                 <dd class="{{ \App\Helpers\ActiveRoute::is_active('admin/rights') }}"><a href="{{ route('admin.rights') }}"><span class="fi-lock-locked" title="rights" aria-hidden="true"></span> Manage rights</a></dd>
-                @endif
+                {{--@endif--}}
             </dl>
             @yield('content')
         </div>

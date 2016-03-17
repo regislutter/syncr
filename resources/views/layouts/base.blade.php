@@ -44,9 +44,9 @@
                     <li class="{{ \App\Helpers\ActiveRoute::is_active('subscriptions') }}"><a href="{{ route('subscriptions.index') }}"><span class="fi-eye-open" title="subscriptions" aria-hidden="true"></span> Subscriptions</a></li>
                     @endif
                     <li class="{{ \App\Helpers\ActiveRoute::is_active('user/'.Auth::user()->id) }}"><a href="{{ route('user.show', Auth::user()->id) }}"><span class="fi-person-genderless" title="user" aria-hidden="true"></span> Profile</a></li>
-                    @if(\Auth::user()->hasRight(\App\Right::ACCESS_ADMIN))
+{{--                    @if(\Auth::user()->hasRight(\App\Right::ACCESS_ADMIN))--}}
                     <li class="active"><a href="{{ route('admin') }}"><span class="fi-shield" title="admin" aria-hidden="true"></span> Admin</a></li>
-                    @endif
+                    {{--@endif--}}
                     <li class="align-right"><a href="{{ route('auth.logout') }}"><span class="fi-account-logout" title="logout" aria-hidden="true"></span> Log out</a></li>
                 </ul>
 
