@@ -26,6 +26,7 @@
         {!! HTML::style('css/sweetalert.css') !!}
         {!! HTML::style('css/app.css') !!}
         {!! HTML::style('css/espresso-theme.css') !!}
+        {!! HTML::style('css/dragula.min.css') !!}
     </head>
     <body>
         <nav class="top-bar" data-topbar role="navigation">
@@ -83,6 +84,7 @@
         </nav>
         @yield('page')
         {!! HTML::script('js/vendor/jquery.js') !!}
+        {!! HTML::script('js/jquery-ui.min.js') !!}
         {!! HTML::script('js/foundation.min.js') !!}
         {!! HTML::script('js/iconic.min.js') !!}
         {!! HTML::script('js/sweetalert.min.js') !!}
@@ -90,12 +92,7 @@
         {!! HTML::script('js/rainbow-generic.js') !!}
         {!! HTML::script('js/rainbow-css.js') !!}
         {!! HTML::script('js/zeroclipboard/ZeroClipboard.js') !!}
-        <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
-        <script>
-            tinymce.init({
-                selector: '#tinycontent'
-            });
-        </script>
+        @yield('javascript')
         <script type="text/javascript">
             $(document).foundation();
             $(document).ready(function(){

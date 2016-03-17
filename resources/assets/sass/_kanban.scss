@@ -1,0 +1,69 @@
+.depot {
+    background: #fcfcfc;
+    padding: 15px;
+    border: 1px solid $black;
+}
+
+.depot, .user-tickets {
+    div {
+        position: relative;
+        display: inline-block;
+        padding: 15px;
+        margin: 10px;
+        -webkit-box-shadow: 1px 1px 7px 0px rgba(50, 50, 50, 0.5);
+        -moz-box-shadow:    1px 1px 7px 0px rgba(50, 50, 50, 0.5);
+        box-shadow:         1px 1px 7px 0px rgba(50, 50, 50, 0.5);
+        min-width: 150px;
+        min-height: 60px;
+    }
+}
+
+.ticket {
+    background: $turquoise;
+    border: 1px solid $primary;
+    width: auto;
+
+    &:before {
+        position: absolute;
+        top: -11px;
+        right: -11px;
+        padding: 6px;
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        background: $white;
+        border-radius: 50%;
+        border: 2px solid $primary;
+        color: $primary;
+    }
+
+    &.fi-brush:before {
+        border: 2px solid $purple;
+        color: $purple;
+    }
+
+    &.fi-bug:before {
+        border: 2px solid $orange;
+        color: $orange;
+    }
+
+    &.fi-cogs:before {
+        border: 2px solid $green;
+        color: $green;
+    }
+
+    &.fi-fork:before {
+        border: 2px solid $blue;
+        color: $blue;
+    }
+
+    &.fi-project:before {
+        border: 2px solid $secondary;
+        color: $secondary;
+    }
+}
+
+.ui-state-highlight {
+    background: $yellow;
+    border: 1px solid $braun;
+}

@@ -66,6 +66,11 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     // Right
     Route::resource('right', 'RightController');
 
+    // Kanban
+    Route::get('kanban', function(){
+        return View::make('kanban/index');
+    });
+
 });
 
 // Authentication routes

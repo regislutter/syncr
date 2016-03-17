@@ -51,3 +51,11 @@
 
     {!! Form::close() !!}
 @stop
+
+@section('javascript)
+    <script>
+        tinymce.init({
+            selector: '#tinycontent'
+        });
+    </script>
+@stop
