@@ -3,6 +3,10 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Right;
+use App\Role;
+use App\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -95,7 +99,7 @@ class UsersTableSeeder extends Seeder {
     public function run()
     {
         // Check if no user at 1 exists
-        $user = User::find(1);
+        $user = \User::find(1);
         if(!$user){
             // Create user
             $userAdmin = User::create(array(
