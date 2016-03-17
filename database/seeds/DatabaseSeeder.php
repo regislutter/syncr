@@ -32,6 +32,8 @@ class RightsTableSeeder extends Seeder {
         // Check if no right at 1 exists
         $right = Right::find(1);
         if(!$right){
+            // Empty table and reinit auto-increment
+            DB::table('rights')->truncate();
             // Create rights
             Right::create(array('name' => 'Client - Create'));
             Right::create(array('name' => 'Client - Modify'));
@@ -78,6 +80,8 @@ class RolesTableSeeder extends Seeder {
         // Check if no role at 1 exists
         $role = Role::find(1);
         if(!$role){
+            // Empty table and reinit auto-increment
+            DB::table('roles')->truncate();
             // Create roles and attach rights
             $watcher = Role::create(array('name' => 'Watcher'));
             $watcher->rights()->attach(7);
@@ -101,6 +105,8 @@ class UsersTableSeeder extends Seeder {
         // Check if no user at 1 exists
         $user = User::find(1);
         if(!$user){
+            // Empty table and reinit auto-increment
+            DB::table('users')->truncate();
             // Create user
             $userAdmin = User::create(array(
                 'name' => 'Admin',
