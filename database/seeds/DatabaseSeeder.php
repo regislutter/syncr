@@ -14,15 +14,15 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(RightsTableSeed::class);
-        $this->call(RolesTableSeed::class);
+        $this->call(RightsTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
         Model::reguard();
     }
 }
 
-class RightsTableSeed extends Seed {
+class RightsTableSeeder extends Seeder {
     public function run()
     {
         // Check if no right at 1 exists
@@ -68,7 +68,7 @@ class RightsTableSeed extends Seed {
     }
 }
 
-class RolesTableSeed extends Seeder {
+class RolesTableSeeder extends Seeder {
     public function run()
     {
         // Check if no role at 1 exists
@@ -91,7 +91,7 @@ class RolesTableSeed extends Seeder {
     }
 }
 
-class UsersTableSeed extends Seeder {
+class UsersTableSeeder extends Seeder {
     public function run()
     {
         // Check if no user at 1 exists
