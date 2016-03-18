@@ -86,11 +86,8 @@ class RolesTableSeeder extends Seeder {
             $watcher = Role::create(array('name' => 'Watcher'));
             $watcher->rights()->attach(7);
 
-            DB::enableQueryLog();
             $editor = Role::create(array('name' => 'Editor'));
             $editor->rights()->attach([7, 10, 11, 13, 14, 16]);
-            $queries = DB::getQueryLog();
-            Log::info($queries);
 
             $developer = Role::create(array('name' => 'Developer'));
             $developer->rights()->attach([10, 11, 13, 14, 18, 19]);
