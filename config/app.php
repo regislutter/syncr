@@ -149,6 +149,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\NotWithValidator::class,
 
+        /*
+         * Mails
+         */
+        Snowfire\Beautymail\BeautymailServiceProvider::class,
+
     ],
 
     /*
