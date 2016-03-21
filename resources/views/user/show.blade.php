@@ -49,6 +49,40 @@
         </div>
     </div>
 
+        <h4>Tickets</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Project</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Estimate</th>
+            <th>Date start</th>
+            <th>Deadline</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($user->tickets as $ticket)
+            <tr>
+                <td><a href="{{ route('ticket.show', [$ticket->id]) }}">{{ $ticket->name }}</a></td>
+                <td><a href="{{ route('project.show', $ticket->project->id) }}">{{ $ticket->project->name }}</a></td>
+                <td>{{ $ticket->getCategory() }}</td>
+                <td>{{ $ticket->getStatus() }}</td>
+                <td>{{ $ticket->getPriority() }}</td>
+                <td>{{ $ticket->getEstimate() }}</td>
+                <td>{{ $ticket->getDateStart() }}</td>
+                <td>{{ $ticket->getDateEnd() }}</td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="8">No tickets yet.</td>
+            </tr>
+        @endforelse
+        </tbody>
+    </table>
+
     @if($user->id == Auth::user()->id)
         <a class="button small round" href="{{ route('user.edit', $user->id) }}">Edit my profile</a>
     @elseif(\Auth::user()->hasRight(\App\Right::USER_MODIFY))

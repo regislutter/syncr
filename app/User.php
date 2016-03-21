@@ -19,12 +19,19 @@ class User extends Model implements AuthenticatableContract,
     public function roles(){
         return $this->belongsToMany('App\Role', 'users_roles');
     }
+
+    public function tickets(){
+        return $this->hasMany('App\Ticket');
+    }
+
     public function subscriptions(){
         return $this->hasMany('App\Subscription');
     }
+
     public function files(){
         return $this->hasMany('App\File');
     }
+
     public function copydecks(){
         return $this->hasManyThrough('App\Copydeck', 'App\File');
     }

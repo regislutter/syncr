@@ -40,7 +40,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="9">No tickets yet.</td>
+                <td colspan="10">No tickets yet.</td>
             </tr>
         @endforelse
         </tbody>
