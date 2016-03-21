@@ -126,7 +126,7 @@ class TicketController extends Controller
         //
     }
 
-    public function kanban()
+    public function kanban($refresh = false)
     {
         $users = User::hasAccessToKanban();
         $ticketsBacklog = Ticket::unassigned();
@@ -134,6 +134,20 @@ class TicketController extends Controller
         $statuses = Ticket::STATUSES;
         unset($statuses[Ticket::STATUS_BACKLOG]);
 
-        return view('kanban.index', ['ticketsbacklog' => $ticketsBacklog, 'tickets' => $tickets, 'users' => $users, 'statuses' => $statuses]);
+        return view('kanban.index', ['ticketsbacklog' => $ticketsBacklog, 'tickets' => $tickets, 'users' => $users, 'statuses' => $statuses, 'refresh' => ($refresh == 'refresh')]);
+    }
+
+    public function changeStatusOrUser(Request $request){
+        if(\Request::ajax()){
+            $ticket = Ticket::find($request['id']);
+            if($ticket){
+                $ticket->status = $request['status'];
+                $ticket->user_id = $request['user'];
+                if($ticket->save()){
+                    return 1;
+                }
+            }
+            return 0;
+        }
     }
 }

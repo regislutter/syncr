@@ -95,7 +95,8 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
 
     // Kanban and tickets
     Route::resource('ticket', 'TicketController');
-    Route::get('kanban', ['as' => 'kanban', 'uses' => 'TicketController@kanban']);
+    Route::post('ticket/change', ['as' => 'ticket.drag', 'uses' => 'TicketController@changeStatusOrUser']);
+    Route::get('kanban/{refresh?}', ['as' => 'kanban', 'uses' => 'TicketController@kanban']);
 });
 
 // Authentication routes
@@ -104,5 +105,5 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout']);
 
 // Registration routes
-Route::get('auth/register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@getRegister']);
+Route::get('auth/register', ['before' => 'csrf', 'as' => 'auth.register', 'uses' => 'Auth\AuthController@getRegister']);
 Route::post('auth/register', 'Auth\AuthController@postRegister');

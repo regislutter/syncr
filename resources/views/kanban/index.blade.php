@@ -32,7 +32,7 @@
             <tr>
                 <td>{{ $status }}</td>
                 @foreach($users as $user)
-                    <td class="user-tickets status-{{ $statusid }} @if($user->id === \Auth::user()->id) own-tickets @endif">
+                    <td data-statusid="{{ $statusid }}" data-userid="{{ $user->id }}" class="user-tickets @if($user->id === \Auth::user()->id) own-tickets @endif">
                         <?php $userTickets = $tickets->filter(function($ticket) use($user, $statusid) {
                             if($ticket->user_id === $user->id && $ticket->status == $statusid){ return true; }
                         }); ?>
@@ -41,7 +41,7 @@
                         @endforeach
                     </td>
                 @endforeach
-                <td class="user-tickets status-{{ $statusid }} own-tickets">
+                <td data-statusid="{{ $statusid }}" data-userid="0" class="user-tickets own-tickets">
                     <?php $noUserTickets = $tickets->filter(function($ticket) use($statusid) {
                         if($ticket->user_id === 0 && $ticket->status == $statusid){ return true; }
                     }); ?>
@@ -72,17 +72,37 @@
     ?>
     <script type="text/javascript">
         $(function() {
+            @if($refresh)
+                setTimeout(function(){
+                    window.location.reload(1);
+                }, 300000);
+            @endif
+
+            // CSRF protection
+            $.ajaxSetup({
+                headers:
+                {
+                    'X-CSRF-Token': '{{ \Session::token() }}'
+                }
+            });
+
             $( "{{ join(', ', $listRightsMoveFrom) }}" ).sortable({
                 connectWith: ["{!! join('", "', $listRightsMoveTo) !!}"],
                 placeholder: "ui-state-highlight",
                 receive: function(event, ui){
                     var recepter = $(event.target);
-                    if(recepter.hasClass('in-progress') && recepter.children().length > 2){
+                    if(recepter.data('statusid') == '3' && recepter.children().length > 2){
                         ui.sender.sortable( "cancel" );
+                    } else {
+                        var dataUpdate = {
+                            'id': $(ui.item).data('ticketid'),
+                            'status': recepter.data('statusid'),
+                            'user': recepter.data('userid'),
+                        };
+                        $.post('{{ route('ticket.drag') }}', dataUpdate).fail(function(){
+                            swal("Ticket not updated...", "An error occured while updating the ticket. Please refer to the administrator if the error persist.", "error");
+                        });
                     }
-
-                    // TODO Ajax request
-                    // TODO If fail, sortable("cancel") + swal alert
                 }
             }).disableSelection();
 
