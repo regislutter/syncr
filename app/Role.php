@@ -11,10 +11,12 @@ class Role extends Model
     const DEVELOPER = 3;
     const ADMIN = 4;
     const SUPER_ADMIN = 5;
+    const PROJECT_MANAGER = 6;
 
     public function users(){
         return $this->belongsToMany('App\User', 'users_roles');
     }
+
     public function rights(){
         return $this->belongsToMany('App\Right', 'roles_rights');
     }

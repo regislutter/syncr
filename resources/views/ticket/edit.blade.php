@@ -61,7 +61,7 @@
         </div>
     </div>
     <a class="button small round secondary" href="{{ route('ticket.index') }}">Cancel</a>
-    {!! Form::submit('Create ticket', array('class' => 'button small round success')) !!}
+    {!! Form::submit('Update ticket', array('class' => 'button small round success')) !!}
 
     {!! Form::close() !!}
 @stop

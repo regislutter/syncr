@@ -2,47 +2,53 @@
 
 @section('title', 'Kanban')
 
-<?php
-    $users = ['Célia', 'François', 'Martin', 'Danilo', 'Yannick', 'Régis', 'Testing'];
-    $nbUsers = count($users);
-    $status = ['Ready', 'In progress', 'Revision', 'Done']; // 'To be tested', 'To be validated',
-?>
+<?php $nbUsers = count($users); ?>
 
 @section('content')
 
     <h1>Oppa Kanban Style</h1>
-    <div id="depot-tickets" class="depot">
+    <div id="backlog-tickets" class="backlog">
         <a class="new-ticket button tiny round right fi-plus" href="{{ route('ticket.create') }}">New ticket</a>
         <h2>Backlog</h2>
-        <div class="ticket fi-brush prio-low" data-ticketid="1">Ticket Design</div>
-        <div class="ticket fi-bug prio-middle">Ticket Bug</div>
-        <div class="ticket fi-cogs prio-high">Ticket Functionnality</div>
-        <div class="ticket fi-project">Ticket Project Management</div>
-        <div class="ticket fi-fork">Ticket Deployment</div>
+
+        @forelse($ticketsbacklog as $tb)
+            @include ('kanban.ticket', ['ticket' => $tb])
+            @empty
+            <p>No tickets available.</p>
+        @endforelse
     </div>
     <table class="kanban">
         <thead>
         <tr>
             <th>Status</th>
             @foreach($users as $user)
-            <th>{{ $user }}</th>
+            <th>{{ $user->name }}</th>
             @endforeach
             <th>Overflow</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($status as $st)
-            <?php $stName = str_replace(' ', '-', strtolower($st)); ?>
+        @foreach($statuses as $statusid => $status)
             <tr>
-                <td>{{ $st }}</td>
-                <?php $i = -1; ?>
-                @while($i++ < $nbUsers-1)
-                    <td class="user-tickets {{ $users[$i]=='Testing'?'own-tickets '.$stName:$stName }}">
-                        <div class="ticket">Ticket {{ $stName }}{{ $users[$i] }}</div>
-                        <div class="ticket">Ticket {{ $stName }}{{ $users[$i] }}2</div>
+                <td>{{ $status }}</td>
+                @foreach($users as $user)
+                    <td class="user-tickets status-{{ $statusid }} @if($user->id === \Auth::user()->id) own-tickets @endif">
+                        <?php $userTickets = $tickets->filter(function($ticket) use($user, $statusid) {
+                            if($ticket->user_id === $user->id && $ticket->status == $statusid){ return true; }
+                        }); ?>
+                        @foreach($userTickets as $userTicket)
+                            @include ('kanban.ticket', ['ticket' => $userTicket])
+                        @endforeach
                     </td>
-                @endwhile
-                <td class="user-tickets own-tickets {{ $stName }}"></td>
+                @endforeach
+                <td class="user-tickets status-{{ $statusid }} own-tickets">
+                    <?php $noUserTickets = $tickets->filter(function($ticket) use($statusid) {
+                        if($ticket->user_id === 0 && $ticket->status == $statusid){ return true; }
+                    }); ?>
+                    @foreach($noUserTickets as $noUserTicket)
+                        @include ('kanban.ticket', ['ticket' => $noUserTicket])
+                    @endforeach
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -52,16 +58,16 @@
 
 @section('javascript')
     <?php
-        $rightMoveOwnTickets = true;
-        $rightTakeDepot = true;
-        $rightDropDepot = false;
-        $rightMoveAllTickets = false;
+        $rightMoveOwnTickets = \Auth::user()->hasRight(\App\Right::TICKET_MOVE_OWN);
+        $rightTakeBacklog = \Auth::user()->hasRight(\App\Right::TICKET_TAKE_BACKLOG);
+        $rightDropBacklog = \Auth::user()->hasRight(\App\Right::TICKET_DROP_BACKLOG);
+        $rightMoveAllTickets = \Auth::user()->hasRight(\App\Right::TICKET_MOVE_ALL);
 
         $listRightsMoveFrom = [];
         $listRightsMoveTo = [];
         if($rightMoveOwnTickets){ array_push($listRightsMoveFrom, '.own-tickets'); array_push($listRightsMoveTo, '.own-tickets'); }
-        if($rightTakeDepot){ array_push($listRightsMoveFrom, '#depot-tickets'); }
-        if($rightTakeDepot && $rightDropDepot){ array_push($listRightsMoveTo, '#depot-tickets'); }
+        if($rightTakeBacklog){ array_push($listRightsMoveFrom, '#backlog-tickets'); }
+        if($rightDropBacklog){ array_push($listRightsMoveTo, '#backlog-tickets'); }
         if($rightMoveAllTickets){ array_push($listRightsMoveFrom, '.user-tickets'); array_push($listRightsMoveTo, '.user-tickets'); }
     ?>
     <script type="text/javascript">
@@ -80,25 +86,38 @@
                 }
             }).disableSelection();
 
-            $('.ticket').on('click', function(e){
-                var ticket = $(e.target);
-                swal({
-                    title: "Ajax request example",
-                    text: "Submit to run ajax request",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true,
-                    cancelButtonText: "Close",
-                    confirmButtonText: "Edit it",
-                },
-                function(isConfirm){
-                    if (isConfirm) {
-                        var url = '{{ route('ticket.edit', '##ticketid##') }}'.replace('##ticketid##', ticket.data('ticketid'));
-                        window.location.href = url;
-                        return false;
-                    }
+            @if(\Auth::user()->hasRight(\App\Right::TICKET_DELETE))
+                $('.ticket').on('click', function(e){
+                    var ticketid = $(this).data('ticketid');
+                    swal({
+                        title: "Ajax request example",
+                        text: "Submit to run ajax request",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true,
+                        cancelButtonText: "Close",
+                        confirmButtonText: "Edit it",
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            var url = '{{ route('ticket.edit', '##ticketid##') }}'.replace('##ticketid##', ticketid);
+                            window.location.href = url;
+                            return false;
+                        }
+                    });
                 });
-            });
+            @else
+                $('.ticket').on('click', function(e){
+                    var ticket = $(e.target);
+                    swal({
+                        title: "Ajax request example",
+                        text: "Submit to run ajax request",
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: "Close"
+                    });
+                });
+            @endif
         });
     </script>
 @stop

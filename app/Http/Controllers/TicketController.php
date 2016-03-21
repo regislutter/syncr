@@ -128,6 +128,12 @@ class TicketController extends Controller
 
     public function kanban()
     {
-        return view('kanban.index');
+        $users = User::hasAccessToKanban();
+        $ticketsBacklog = Ticket::unassigned();
+        $tickets = Ticket::assigned();
+        $statuses = Ticket::STATUSES;
+        unset($statuses[Ticket::STATUS_BACKLOG]);
+
+        return view('kanban.index', ['ticketsbacklog' => $ticketsBacklog, 'tickets' => $tickets, 'users' => $users, 'statuses' => $statuses]);
     }
 }

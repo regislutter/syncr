@@ -4,14 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use \DateTime;
+
 class Ticket extends Model
 {
-    const STATUS_NONE = 1;
+    const STATUS_BACKLOG = 0;
+    const STATUS_WAITING = 1;
     const STATUS_READY = 2;
     const STATUS_INPROGRESS = 3;
     const STATUS_REVISION = 4;
     const STATUS_DONE = 5;
-    const STATUSES = [1 => 'Waiting', 2 => 'Ready', 3 => 'In Progress', 4 => 'Revision', 5 => 'Done'];
+    const STATUSES = [0 => 'Backlog', 1 => 'Waiting', 2 => 'Ready', 3 => 'In Progress', 4 => 'Revision', 5 => 'Done'];
 
     const CATEGORY_DESIGN = 1;
     const CATEGORY_BUG = 2;
@@ -40,6 +43,22 @@ class Ticket extends Model
      */
     protected $fillable = ['name', 'description', 'category', 'status', 'priority', 'date_start', 'date_end', 'estimate', 'user_id', 'project_id'];
 
+    public function scopeUnassigned($query)
+    {
+        return $query->where('status', Ticket::STATUS_BACKLOG)->get();
+    }
+
+    public function scopeAssigned($query)
+    {
+        // Get tickets undone or done for less than 2 days
+        return $query->whereIn('status', [Ticket::STATUS_WAITING, Ticket::STATUS_READY, Ticket::STATUS_INPROGRESS, Ticket::STATUS_REVISION])->orWhere(function($q){
+            $date = new DateTime;
+            $date->modify('-2 days');
+            $formatted_date = $date->format('Y-m-d H:i:s');
+            $q->where('status', Ticket::STATUS_DONE)->where('updated_at', '>', $formatted_date);
+        })->get();
+    }
+
     public function user(){
         return $this->belongsTo('App\User');
     }
@@ -56,6 +75,42 @@ class Ticket extends Model
     public function getCategory(){
         $category = Ticket::CATEGORIES[$this->category];
         return (!isset($category) || is_null($category)) ? 'Unknown' : $category;
+    }
+
+    public function getCategoryIconClass(){
+        $iconClass = 'fi-link-broken';
+        switch($this->category){
+            case Ticket::CATEGORY_DESIGN:
+                $iconClass = 'fi-brush';
+                break;
+            case Ticket::CATEGORY_BUG:
+                $iconClass = 'fi-bug';
+                break;
+            case Ticket::CATEGORY_FUNCTIONALITY:
+                $iconClass = 'fi-cogs';
+                break;
+            case Ticket::CATEGORY_PROJECT_MANAGEMENT:
+                $iconClass = 'fi-project';
+                break;
+            case Ticket::CATEGORY_DEPLOY:
+                $iconClass = 'fi-fork';
+                break;
+        }
+        return $iconClass;
+    }
+
+    public function getPriorityColorClass(){
+        switch($this->priority){
+            case Ticket::PRIORITY_MID:
+                return 'prio-middle';
+                break;
+            case Ticket::PRIORITY_HIGH:
+                return 'prio-high';
+                break;
+            default:
+                return 'prio-low';
+                break;
+        }
     }
 
     public function getPriority(){

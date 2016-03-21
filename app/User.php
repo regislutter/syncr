@@ -36,6 +36,12 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasManyThrough('App\Copydeck', 'App\File');
     }
 
+    public function scopeHasAccessToKanban($query){
+        return $query->whereHas('roles', function($q){
+            $q->whereIn('id', [Role::DEVELOPER, Role::PROJECT_MANAGER]);
+        })->get();
+    }
+
     public function subscribedFiles($status){
         $files = null;
         $subs = $this->subscriptions()->get();

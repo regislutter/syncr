@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->string('name', 255);
             $table->text('description');
             $table->tinyInteger('category')->unsigned()->default(2);
-            $table->tinyInteger('status')->unsigned()->default(1);
+            $table->tinyInteger('status')->unsigned()->default(0);
             $table->tinyInteger('priority')->unsigned()->default(1);
             $table->tinyInteger('estimate')->unsigned()->default(2);
             $table->timestamp('date_start')->nullable();

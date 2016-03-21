@@ -1,4 +1,4 @@
-.depot {
+.backlog {
     background: #F9F9F9;
     padding: 15px;
     border: 1px solid $primary-dark;
@@ -12,8 +12,8 @@
     }
 }
 
-.depot, .user-tickets {
-    div {
+.backlog, .user-tickets {
+    > div {
         display: inline-block;
         min-width: 150px;
         min-height: 48px;
@@ -34,6 +34,26 @@
     //border: 1px solid $primary;
     border-left: 3px solid $color-info;
     cursor: pointer;
+
+    &-title {
+        font-weight: bold;
+    }
+
+    &-project {
+        float: right;
+        font-size: 11px;
+    }
+
+    &-dates {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    &-estimate {
+        font-weight: bold;
+        margin: 0 10px;
+    }
 
     &.prio-low {
         border-left: 5px solid $success-color;
@@ -91,7 +111,7 @@
     //    color: $secondary;
     //}
     &:hover:before {
-        content: '\e26e' !important;
+        content: '\e190' !important; // zoom(+) e26e
     }
     //&.editable:hover:before {
     //    content: '\e204' !important;
