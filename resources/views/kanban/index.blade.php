@@ -3,9 +3,9 @@
 @section('title', 'Kanban')
 
 <?php
-    $users = ['Célia', 'François', 'Martin', 'Danilo', 'Yannick', 'Régis', 'Florent'];
+    $users = ['Célia', 'François', 'Martin', 'Danilo', 'Yannick', 'Régis', 'Testing'];
     $nbUsers = count($users);
-    $status = ['Stalled', 'In progress', 'Done', 'Stash']; // 'To be tested', 'To be validated',
+    $status = ['Ready', 'In progress', 'Revision', 'Done']; // 'To be tested', 'To be validated',
 ?>
 
 @section('content')
@@ -13,19 +13,22 @@
     {{--<a class="button small round right" href="{{ route('user.create') }}">Create new task</a>--}}
     <h1>Oppa Kanban Style</h1>
     <div id="depot-tickets" class="depot">
-        <div class="ticket fi-brush">Ticket Design</div>
-        <div class="ticket fi-bug">Ticket Bug</div>
-        <div class="ticket fi-cogs">Ticket Functionnality</div>
+        <a class="new-ticket button tiny round right fi-plus" href="{{ route('user.create') }}">New ticket</a>
+        <h2>Backlog</h2>
+        <div class="ticket fi-brush prio-low">Ticket Design</div>
+        <div class="ticket fi-bug prio-middle">Ticket Bug</div>
+        <div class="ticket fi-cogs prio-high">Ticket Functionnality</div>
         <div class="ticket fi-project">Ticket Project Management</div>
         <div class="ticket fi-fork">Ticket Deployment</div>
     </div>
-    <table>
+    <table class="kanban">
         <thead>
         <tr>
             <th>Status</th>
             @foreach($users as $user)
             <th>{{ $user }}</th>
             @endforeach
+            <th>Overflow</th>
         </tr>
         </thead>
         <tbody>
@@ -35,11 +38,12 @@
                 <td>{{ $st }}</td>
                 <?php $i = -1; ?>
                 @while($i++ < $nbUsers-1)
-                    <td class="user-tickets {{ $users[$i]=='Florent'?$stName.' own-tickets':$stName }}">
+                    <td class="user-tickets {{ $users[$i]=='Testing'?'own-tickets '.$stName:$stName }}">
                         <div class="ticket">Ticket {{ $stName }}{{ $users[$i] }}</div>
                         <div class="ticket">Ticket {{ $stName }}{{ $users[$i] }}2</div>
                     </td>
                 @endwhile
+                <td class="user-tickets own-tickets {{ $stName }}"></td>
             </tr>
         @endforeach
         </tbody>

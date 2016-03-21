@@ -20,7 +20,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="3">No roles yet.</td>
+                <td colspan="2">No roles yet.</td>
             </tr>
         @endforelse
         </tbody>

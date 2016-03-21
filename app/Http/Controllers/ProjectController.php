@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\DesignChart;
 use Illuminate\Http\Request;
 
 use App\Client;
 use App\Project;
+use App\DesignChart;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 

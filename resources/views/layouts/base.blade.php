@@ -66,7 +66,7 @@
                             @endif
                         </ul>
                     </li>
-                    <li class="has-dropdown {{ \App\Helpers\ActiveRoute::is_active('project') }}"><a href="#"><span class="fi-grid-three-up" title="grid three up" aria-hidden="true"></span> Projects</a>
+                    <li class="has-dropdown {{ \App\Helpers\ActiveRoute::is_active('project') }}"><a href="#"><span class="fi-project" title="grid three up" aria-hidden="true"></span> Projects</a>
                         <ul class="dropdown">
                             @if (Session::has('projects'))
                                 @foreach (session('projects') as $project)
@@ -79,6 +79,16 @@
                         </ul>
                     </li>
                     <li class="{{ \App\Helpers\ActiveRoute::is_active('user') }}"><a href="{{ route('user.index') }}"><span class="fi-people" title="users" aria-hidden="true"></span> Users</a></li>
+                    <li class="has-dropdown {{ \App\Helpers\ActiveRoute::is_active('kanban') }}"><a href="{{ route('kanban') }}"><span class="fi-grid-three-up" title="kanban" aria-hidden="true"></span> Kanban</a>
+                        <ul class="dropdown">
+                            @if(\Auth::user()->hasRight(\App\Right::TICKET_MODIFY))
+                                <li class="{{ \App\Helpers\ActiveRoute::is_active('ticket') }}"><a href="{{ route('ticket.index') }}">Manage tickets</a></li>
+                            @endif
+                            @if(\Auth::user()->hasRight(\App\Right::TICKET_CREATE))
+                                <li class="action {{ \App\Helpers\ActiveRoute::is_active('ticket/create') }}"><a href="{{ route('ticket.create') }}">New ticket</a></li>
+                            @endif
+                        </ul>
+                    </li>
                 </ul>
             </section>
         </nav>

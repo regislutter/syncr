@@ -3,6 +3,18 @@
 @section('title', 'Create new role')
 
 @section('content')
+    <h1>Create new role</h1>
+
+    @if (count($errors) > 0)
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><span class="alert round label">{{ $error }}</span></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {!! Form::open(array('url' => route('role.store'))) !!}
 
     {!! Form::label('name', 'Name') !!}{!! Form::text('name') !!}
