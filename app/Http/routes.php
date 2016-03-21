@@ -93,11 +93,9 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     // Right
     Route::resource('right', 'RightController');
 
-    // Kanban
-    Route::get('kanban', function(){
-        return View::make('kanban/index');
-    });
-
+    // Kanban and tickets
+    Route::resource('ticket', 'TicketController');
+    Route::get('kanban', ['as' => 'kanban', 'uses' => 'TicketController@kanban']);
 });
 
 // Authentication routes

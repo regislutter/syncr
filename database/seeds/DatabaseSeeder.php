@@ -70,6 +70,7 @@ class RightsTableSeeder extends Seeder {
             Right::create(array('name' => 'Post Message in Discussion'));
             Right::create(array('name' => 'Edit (every) Message in Discussion'));
             Right::create(array('name' => 'Delete (every) Message in Discussion'));
+            $this->call(TicketsRightsSeeder::class);
         }
     }
 }

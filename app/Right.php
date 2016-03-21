@@ -40,6 +40,13 @@ class Right extends Model {
     const POST_MESSAGE = 33;
     const EDIT_MESSAGE = 34;
     const DELETE_MESSAGE = 35;
+    const TICKET_CREATE = 36;
+    const TICKET_MODIFY = 37;
+    const TICKET_DELETE = 38;
+    const TICKET_MOVE_OWN = 39;
+    const TICKET_TAKE_BACKLOG = 40;
+    const TICKET_DROP_BACKLOG = 41;
+    const TICKET_MOVE_ALL = 42;
 
     public function roles(){
         return $this->belongsToMany('App\Role', 'roles_rights');
