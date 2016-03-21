@@ -10,10 +10,9 @@
 
 @section('content')
 
-    {{--<a class="button small round right" href="{{ route('user.create') }}">Create new task</a>--}}
     <h1>Oppa Kanban Style</h1>
     <div id="depot-tickets" class="depot">
-        <a class="new-ticket button tiny round right fi-plus" href="{{ route('user.create') }}">New ticket</a>
+        <a class="new-ticket button tiny round right fi-plus" href="{{ route('ticket.create') }}">New ticket</a>
         <h2>Backlog</h2>
         <div class="ticket fi-brush prio-low">Ticket Design</div>
         <div class="ticket fi-bug prio-middle">Ticket Bug</div>
