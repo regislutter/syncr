@@ -29,13 +29,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="large-12 columns">
-            {!! Form::label('status', 'Status') !!}{!! Form::select('status', $statuses) !!}
+        <div class="large-6 medium-6 columns">
+            {!! Form::label('project_id', 'Project') !!}{!! Form::select('project_id', $projects) !!}
+        </div>
+        <div class="large-6 medium-6 columns">
+            {!! Form::label('category', 'Category') !!}{!! Form::select('category', $categories) !!}
         </div>
     </div>
     <div class="row">
         <div class="large-6 medium-6 columns">
-            {!! Form::label('category', 'Category') !!}{!! Form::select('category', $categories) !!}
+            {!! Form::label('status', 'Status') !!}{!! Form::select('status', $statuses) !!}
         </div>
         <div class="large-6 medium-6 columns">
             {!! Form::label('user_id', 'User') !!}{!! Form::select('user_id', $users) !!}

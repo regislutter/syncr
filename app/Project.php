@@ -18,6 +18,10 @@ class Project extends Model
         return $this->hasMany('App\Copydeck');
     }
 
+    public function tickets(){
+        return $this->hasMany('App\Ticket');
+    }
+
     public function discussions(){
         return $this->hasMany('App\Discussion');
     }

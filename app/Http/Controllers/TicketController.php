@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Ticket;
 use App\User;
+use App\Project;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -33,7 +34,11 @@ class TicketController extends Controller
         foreach(User::all() as $user){
             $usersList[$user->id] = $user->name;
         }
-        return view('ticket.create', ['categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES, 'users' => $usersList]);
+        $projectsList = [0 => 'Select a project'];
+        foreach(Project::all() as $project){
+            $projectsList[$project->id] = $project->name;
+        }
+        return view('ticket.create', ['users' => $usersList, 'projects' => $projectsList, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES]);
     }
 
     /**
@@ -47,13 +52,12 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'project_id' => 'required'
         ]);
 
         Ticket::create($request->all());
 
-//        $ticket = new Ticket;
-//        $ticket->name = $request->input('name');
         return redirect()->route('ticket.index');
     }
 
@@ -82,7 +86,11 @@ class TicketController extends Controller
         foreach(User::all() as $user){
             $usersList[$user->id] = $user->name;
         }
-        return view('ticket.edit', ['ticket' => $ticket, 'statuses' => Ticket::STATUSES, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES, 'users' => $usersList]);
+        $projectsList = [0 => 'Select a project'];
+        foreach(Project::all() as $project){
+            $projectsList[$project->id] = $project->name;
+        }
+        return view('ticket.edit', ['ticket' => $ticket, 'users' => $usersList, 'projects' => $projectsList, 'statuses' => Ticket::STATUSES, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES]);
     }
 
     /**
@@ -97,7 +105,8 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'project_id' => 'required'
         ]);
 
         $ticket = Ticket::find($id);

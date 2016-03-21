@@ -5,6 +5,7 @@
 @section('content')
     <h1>{{ $ticket->name }}</h1>
     <h4>{{ $ticket->getCategory() }}</h4>
+    <div class="small"><a href="{{ route('project.show', $ticket->project->id) }}">{{ $ticket->project->name }}</a></div>
 
     <div class="row">
         <div class="large-12 columns">

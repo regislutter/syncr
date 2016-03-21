@@ -16,52 +16,101 @@
     <a class="button small round right" href="{{ route('copydeck.create', $project->id) }}"><span class="fi-plus" title="star" aria-hidden="true"></span> Create a new copydeck</a>
     @endif
 
-    <h4>{{ $project->copydecks->count() }} Copydecks</h4>
-    <table>
-        <thead>
-        <tr>
-            <th width="200">Copydeck</th>
-            <th>File name</th>
-            <th>Server links</th>
-            <th width="150">Last version</th>
-            <th width="150">Deployed version</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            @forelse($project->copydecks as $copydeck)
-            <tr>
-                <td><a href="{{ route('copydeck.show', [$copydeck->id]) }}">{{ $copydeck->name }}</a></td>
-                <?php $file = $copydeck->files->last(); ?>
-                <td>
-                    @if(empty($file->link))
-                        <strong>Online version</strong>
-                    @else
-                        {{ substr($file->link, strrpos($file->link, '/')+1) }}
-                    @endif
-                </td>
-                <td>
-                    <a class="label round" href="{{ substr($file->link, 0, strrpos($file->link, '/')) }}"><span class="fi-browser-type-safari" title="safari" aria-hidden="true"></span> Safari users</a>
-                    <a class="copy-button label round" data-clipboard-text="{{ substr($file->link, 0, strrpos($file->link, '/')) }}" title="Click to copy the path."><span class="fi-browser-type-chrome" title="chrome" aria-hidden="true"></span> Other browsers</a>
-                </td>
-                <td>{{ $file->version }} - {{ $file->getStatusText() }}<br/><span class="small">{{ date('d M Y', strtotime($file['created_at']->toDateTimeString())) }}</span></td>
-                <?php $lastFile = $copydeck->files()->where('status', \App\File::STATUS_DEPLOYED)->orderBy('status_updated_at', 'desc')->first(); ?>
-                <td>@if($lastFile) {{ $lastFile->version }} <span class="small">- {{ date('d M Y', strtotime($lastFile->status_updated_at->toDateTimeString())) }}</span> @else None @endif</td>
-                <td>
-                    @if(\Auth::user()->hasRight(\App\Right::VERSION_CREATE))
-                    <a href="{{ route('file.create', [$project->id, $copydeck->id]) }}" class="button tiny"><span class="fi-data-transfer-upload" title="upload" aria-hidden="true"></span> New version</a>
-                    @endif
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="6">No copydeck in this project.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-
     <ul class="accordion" data-accordion>
+        <li class="accordion-navigation">
+            <a href="#panel3a">Copydecks</a>
+            <div id="panel3a" class="content">
+                <h4>{{ $project->copydecks->count() }} Copydecks</h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th width="200">Copydeck</th>
+                        <th>File name</th>
+                        <th>Server links</th>
+                        <th width="150">Last version</th>
+                        <th width="150">Deployed version</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($project->copydecks as $copydeck)
+                        <tr>
+                            <td><a href="{{ route('copydeck.show', [$copydeck->id]) }}">{{ $copydeck->name }}</a></td>
+                            <?php $file = $copydeck->files->last(); ?>
+                            <td>
+                                @if(empty($file->link))
+                                    <strong>Online version</strong>
+                                @else
+                                    {{ substr($file->link, strrpos($file->link, '/')+1) }}
+                                @endif
+                            </td>
+                            <td>
+                                <a class="label round" href="{{ substr($file->link, 0, strrpos($file->link, '/')) }}"><span class="fi-browser-type-safari" title="safari" aria-hidden="true"></span> Safari users</a>
+                                <a class="copy-button label round" data-clipboard-text="{{ substr($file->link, 0, strrpos($file->link, '/')) }}" title="Click to copy the path."><span class="fi-browser-type-chrome" title="chrome" aria-hidden="true"></span> Other browsers</a>
+                            </td>
+                            <td>{{ $file->version }} - {{ $file->getStatusText() }}<br/><span class="small">{{ date('d M Y', strtotime($file['created_at']->toDateTimeString())) }}</span></td>
+                            <?php $lastFile = $copydeck->files()->where('status', \App\File::STATUS_DEPLOYED)->orderBy('status_updated_at', 'desc')->first(); ?>
+                            <td>@if($lastFile) {{ $lastFile->version }} <span class="small">- {{ date('d M Y', strtotime($lastFile->status_updated_at->toDateTimeString())) }}</span> @else None @endif</td>
+                            <td>
+                                @if(\Auth::user()->hasRight(\App\Right::VERSION_CREATE))
+                                <a href="{{ route('file.create', [$project->id, $copydeck->id]) }}" class="button tiny"><span class="fi-data-transfer-upload" title="upload" aria-hidden="true"></span> New version</a>
+                                @endif
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6">No copydeck in this project.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
+        <li class="accordion-navigation">
+            <a href="#panel4a">Tickets</a>
+            <div id="panel4a" class="content">
+                <h4>Tickets</h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Estimate</th>
+                        <th>Date start</th>
+                        <th>Deadline</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($project->tickets as $ticket)
+                        <tr>
+                            <td><a href="{{ route('ticket.show', $ticket->id) }}">{{ $ticket->name }}</a></td>
+                            <td>{{ $ticket->getCategory() }}</td>
+                            <td>{{ $ticket->getStatus() }}</td>
+                            <td>{{ $ticket->getPriority() }}</td>
+                            <td>{{ $ticket->getEstimate() }}</td>
+                            <td>{{ $ticket->getDateStart() }}</td>
+                            <td>{{ $ticket->getDateEnd() }}</td>
+                            <td><a href="{{ route('user.show', [$ticket->user->id]) }}">{{ $ticket->user->name }}</a></td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8">
+                                No tickets yet.<br/>
+                                @if(\Auth::user()->hasRight(\App\Right::TICKET_CREATE))
+                                    <a class="button tiny round left" href="{{ route('ticket.create') }}"><span class="fi-plus" title="create" aria-hidden="true"></span> Create new ticket</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </li>
+
         <li class="accordion-navigation">
             <a href="#panel1a">Discussions</a>
             <div id="panel1a" class="content">

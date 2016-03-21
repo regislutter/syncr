@@ -38,10 +38,14 @@ class Ticket extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'category', 'status', 'priority', 'date_start', 'date_end', 'estimate', 'user_id'];
+    protected $fillable = ['name', 'description', 'category', 'status', 'priority', 'date_start', 'date_end', 'estimate', 'user_id', 'project_id'];
 
     public function user(){
         return $this->belongsTo('App\User');
+    }
+
+    public function project(){
+        return $this->belongsTo('App\Project');
     }
 
     public function getStatus(){
