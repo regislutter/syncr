@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Edit project '.$project->name)
+@section('title', 'Edit project: '.$project->name)
 
 @section('content')
     <h1>Edit project: {{ $project->name }}</h1>

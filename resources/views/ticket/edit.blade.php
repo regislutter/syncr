@@ -1,9 +1,10 @@
 @extends('layouts.master')
 
-@section('title', 'Edit ticket')
+@section('title', 'Edit ticket: '.$ticket->name)
 
 @section('content')
-    <h1>Edit ticket</h1>
+    <h1>Edit ticket:</h1>
+    <h2>{{ $ticket->name }}</h2>
 
     @if (count($errors) > 0)
         <div>

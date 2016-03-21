@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Project : ' . $project->name)
+@section('title', 'Project: ' . $project->name)
 
 @section('content')
     <h1><img data-src="/images/svg/smart/grid.svg" class="iconic iconic-md" alt="grid"> {{ $project->name }}</h1>
