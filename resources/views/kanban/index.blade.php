@@ -14,7 +14,7 @@
     <div id="depot-tickets" class="depot">
         <a class="new-ticket button tiny round right fi-plus" href="{{ route('ticket.create') }}">New ticket</a>
         <h2>Backlog</h2>
-        <div class="ticket fi-brush prio-low">Ticket Design</div>
+        <div class="ticket fi-brush prio-low" data-ticketid="1">Ticket Design</div>
         <div class="ticket fi-bug prio-middle">Ticket Bug</div>
         <div class="ticket fi-cogs prio-high">Ticket Functionnality</div>
         <div class="ticket fi-project">Ticket Project Management</div>
@@ -74,8 +74,31 @@
                     if(recepter.hasClass('in-progress') && recepter.children().length > 2){
                         ui.sender.sortable( "cancel" );
                     }
+
+                    // TODO Ajax request
+                    // TODO If fail, sortable("cancel") + swal alert
                 }
             }).disableSelection();
+
+            $('.ticket').on('click', function(e){
+                var ticket = $(e.target);
+                swal({
+                    title: "Ajax request example",
+                    text: "Submit to run ajax request",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    cancelButtonText: "Close",
+                    confirmButtonText: "Edit it",
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        var url = '{{ route('ticket.edit', '##ticketid##') }}'.replace('##ticketid##', ticket.data('ticketid'));
+                        window.location.href = url;
+                        return false;
+                    }
+                });
+            });
         });
     </script>
 @stop

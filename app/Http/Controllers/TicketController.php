@@ -27,7 +27,7 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         $usersList = [0 => 'Select a user'];
         foreach(User::all() as $user){
@@ -76,7 +76,13 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::find($id);
+
+        $usersList = [0 => 'Select a user'];
+        foreach(User::all() as $user){
+            $usersList[$user->id] = $user->name;
+        }
+        return view('ticket.edit', ['ticket' => $ticket, 'statuses' => Ticket::STATUSES, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES, 'users' => $usersList]);
     }
 
     /**
@@ -88,7 +94,16 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'category' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $ticket = Ticket::find($id);
+        $ticket->update($request->all());
+
+        return redirect()->route('ticket.show', $id);
     }
 
     /**
@@ -100,5 +115,10 @@ class TicketController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function kanban()
+    {
+        return view('kanban.index');
     }
 }

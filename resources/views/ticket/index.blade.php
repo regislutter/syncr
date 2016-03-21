@@ -32,7 +32,7 @@
                 <td><a href="{{ route('user.show', [$ticket->user->id]) }}">{{ $ticket->user->name }}</a></td>
                 <td>
                     @if(\Auth::user()->hasRight(\App\Right::TICKET_MODIFY))
-                        <a href="{{ route('ticket.update', [$ticket->id]) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit</a>
+                        <a href="{{ route('ticket.edit', [$ticket->id]) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit</a>
                     @endif
                 </td>
             </tr>

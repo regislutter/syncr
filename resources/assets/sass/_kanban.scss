@@ -90,9 +90,12 @@
     //    border: 2px solid $secondary;
     //    color: $secondary;
     //}
-    &.editable:hover:before {
-        content: '\e204' !important;
+    &:hover:before {
+        content: '\e26e' !important;
     }
+    //&.editable:hover:before {
+    //    content: '\e204' !important;
+    //}
 }
 
 table.kanban {
