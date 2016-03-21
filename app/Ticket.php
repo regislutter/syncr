@@ -31,6 +31,8 @@ class Ticket extends Model
     const ESTIMATE_XL = 4;
     const ESTIMATES = [1 => 'S', 2 => 'M', 3 => 'L', 4 => 'XL'];
 
+    const DATE_FORMAT = 'd M Y';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -60,5 +62,19 @@ class Ticket extends Model
     public function getEstimate(){
         $estimate = Ticket::ESTIMATES[$this->estimate];
         return (!isset($estimate) || is_null($estimate)) ? 'Unknown' : $estimate;
+    }
+
+    public function getDateStart(){
+        if(!$this->date_start) {
+            return '/';
+        }
+        return date(Ticket::DATE_FORMAT, strtotime($this->date_start));
+    }
+
+    public function getDateEnd(){
+        if(!$this->date_end) {
+            return '/';
+        }
+        return date(Ticket::DATE_FORMAT, strtotime($this->date_end));
     }
 }
