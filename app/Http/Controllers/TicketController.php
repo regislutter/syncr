@@ -38,7 +38,7 @@ class TicketController extends Controller
         foreach(Project::all() as $project){
             $projectsList[$project->id] = $project->name;
         }
-        return view('ticket.create', ['users' => $usersList, 'projects' => $projectsList, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES]);
+        return view('ticket.create', ['users' => $usersList, 'projects' => $projectsList, 'categories' => Ticket::$CATEGORIES, 'priorities' => Ticket::$PRIORITIES, 'estimates' => Ticket::$ESTIMATES]);
     }
 
     /**
@@ -90,7 +90,7 @@ class TicketController extends Controller
         foreach(Project::all() as $project){
             $projectsList[$project->id] = $project->name;
         }
-        return view('ticket.edit', ['ticket' => $ticket, 'users' => $usersList, 'projects' => $projectsList, 'statuses' => Ticket::STATUSES, 'categories' => Ticket::CATEGORIES, 'priorities' => Ticket::PRIORITIES, 'estimates' => Ticket::ESTIMATES]);
+        return view('ticket.edit', ['ticket' => $ticket, 'users' => $usersList, 'projects' => $projectsList, 'statuses' => Ticket::$STATUSES, 'categories' => Ticket::$CATEGORIES, 'priorities' => Ticket::$PRIORITIES, 'estimates' => Ticket::$ESTIMATES]);
     }
 
     /**
@@ -131,7 +131,7 @@ class TicketController extends Controller
         $users = User::hasAccessToKanban();
         $ticketsBacklog = Ticket::unassigned();
         $tickets = Ticket::assigned();
-        $statuses = Ticket::STATUSES;
+        $statuses = Ticket::$STATUSES;
         unset($statuses[Ticket::STATUS_BACKLOG]);
 
         return view('kanban.index', ['ticketsbacklog' => $ticketsBacklog, 'tickets' => $tickets, 'users' => $users, 'statuses' => $statuses, 'refresh' => ($refresh == 'refresh')]);
