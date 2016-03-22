@@ -20,7 +20,11 @@
             Priority: {{ $ticket->getPriority() }}
         </div>
         <div class="large-4 medium-4 columns">
+            @if($ticket->user)
             Owned by: <a href="{{ route('user.show', $ticket->user->id) }}">{{ $ticket->user->name }}</a>
+            @else
+            No user assigned
+            @endif
         </div>
     </div>
     <div class="row">

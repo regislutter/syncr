@@ -31,7 +31,13 @@
                 <td>{{ $ticket->getEstimate() }}</td>
                 <td>{{ $ticket->getDateStart() }}</td>
                 <td>{{ $ticket->getDateEnd() }}</td>
-                <td><a href="{{ route('user.show', [$ticket->user->id]) }}">{{ $ticket->user->name }}</a></td>
+                <td>
+                    @if($ticket->user)
+                    <a href="{{ route('user.show', [$ticket->user->id]) }}">{{ $ticket->user->name }}</a>
+                    @else
+                    /
+                    @endif
+                </td>
                 <td>
                     @if(\Auth::user()->hasRight(\App\Right::TICKET_MODIFY))
                         <a href="{{ route('ticket.edit', [$ticket->id]) }}" class="button tiny"><span class="fi-pencil" title="edit" aria-hidden="true"></span> Edit</a>

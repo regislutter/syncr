@@ -34,7 +34,7 @@ class TicketController extends Controller
         foreach(User::all() as $user){
             $usersList[$user->id] = $user->name;
         }
-        $projectsList = [0 => 'Select a project'];
+        $projectsList = ['' => 'Select a project'];
         foreach(Project::all() as $project){
             $projectsList[$project->id] = $project->name;
         }
@@ -52,7 +52,6 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'user_id' => 'required',
             'project_id' => 'required'
         ]);
 
@@ -86,7 +85,7 @@ class TicketController extends Controller
         foreach(User::all() as $user){
             $usersList[$user->id] = $user->name;
         }
-        $projectsList = [0 => 'Select a project'];
+        $projectsList = ['' => 'Select a project'];
         foreach(Project::all() as $project){
             $projectsList[$project->id] = $project->name;
         }
@@ -105,7 +104,6 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'user_id' => 'required',
             'project_id' => 'required'
         ]);
 
