@@ -10,6 +10,13 @@
     a.fi-plus:before {
         margin-right: 5px;
     }
+
+    .no-tickets {
+        display: block;
+        &.hide {
+            display: none;
+        }
+    }
 }
 
 .backlog, .user-tickets {

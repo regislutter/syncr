@@ -14899,6 +14899,14 @@ img.avatar.small {
   margin-right: 5px;
 }
 
+.backlog .no-tickets {
+  display: block;
+}
+
+.backlog .no-tickets.hide {
+  display: none;
+}
+
 .backlog > div,
 .user-tickets > div {
   display: inline-block;

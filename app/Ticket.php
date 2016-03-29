@@ -14,7 +14,7 @@ class Ticket extends Model
     const STATUS_INPROGRESS = 3;
     const STATUS_REVISION = 4;
     const STATUS_DONE = 5;
-    public static $STATUSES = [0 => 'Backlog', 1 => 'Waiting', 2 => 'Ready', 3 => 'In Progress', 4 => 'Revision', 5 => 'Done'];
+    public static $STATUSES = [0 => 'Backlog', 2 => 'Ready', 3 => 'In Progress', 4 => 'Revision', 5 => 'Done']; // 1 => 'Waiting',
 
     const CATEGORY_DESIGN = 1;
     const CATEGORY_BUG = 2;

@@ -57,7 +57,7 @@ class TicketController extends Controller
 
         Ticket::create($request->all());
 
-        return redirect()->route('ticket.index');
+        return redirect()->route('kanban');
     }
 
     /**
@@ -110,7 +110,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $ticket->update($request->all());
 
-        return redirect()->route('ticket.show', $id);
+        return redirect()->route('kanban');
     }
 
     /**

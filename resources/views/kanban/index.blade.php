@@ -7,15 +7,17 @@
 @section('content')
 
     <h1>Oppa Kanban Style</h1>
-    <div id="backlog-tickets" class="backlog">
+    <div class="backlog">
         <a class="new-ticket button tiny round right fi-plus" href="{{ route('ticket.create') }}">New ticket</a>
         <h2>Backlog</h2>
-
-        @forelse($ticketsbacklog as $tb)
-            @include ('kanban.ticket', ['ticket' => $tb])
+        <div id="backlog-tickets" data-statusid="0" data-userid="0">
+            @forelse($ticketsbacklog as $tb)
+                @include ('kanban.ticket', ['ticket' => $tb])
+                <p class="no-tickets hide">No tickets available.</p>
             @empty
-            <p>No tickets available.</p>
-        @endforelse
+                <p class="no-tickets">No tickets available.</p>
+            @endforelse
+        </div>
     </div>
     <table class="kanban">
         <thead>
@@ -94,6 +96,11 @@
                     if(recepter.data('statusid') == '3' && recepter.children().length > 2){
                         ui.sender.sortable( "cancel" );
                     } else {
+                        if(recepter.attr('id') == 'backlog-tickets'){
+                            $('.no-tickets').addClass('hide');
+                        }else if(ui.sender.children('.ticket').length <= 0){
+                            $('.no-tickets').removeClass('hide');
+                        }
                         var dataUpdate = {
                             'id': $(ui.item).data('ticketid'),
                             'status': recepter.data('statusid'),
