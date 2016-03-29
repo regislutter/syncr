@@ -19,7 +19,7 @@ class Ticket extends Model
     const CATEGORY_DESIGN = 1;
     const CATEGORY_BUG = 2;
     const CATEGORY_FUNCTIONALITY = 3;
-    const CATEGORY_PROJET_MANAGEMENT = 4;
+    const CATEGORY_PROJECT_MANAGEMENT = 4;
     const CATEGORY_DEPLOY = 5;
     public static $CATEGORIES = [1 => 'Design', 2 => 'Bug', 3 => 'Functionality', 4 => 'Project Management', 5 => 'Deployment'];
 
