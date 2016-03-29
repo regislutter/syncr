@@ -52,7 +52,9 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'project_id' => 'required'
+            'project_id' => 'required',
+            'date_start' => 'date|date_format:Y-n-j',
+            'date_end' => 'date|date_format:Y-n-j'
         ]);
 
         Ticket::create($request->all());
@@ -104,7 +106,9 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'project_id' => 'required'
+            'project_id' => 'required',
+            'date_start' => 'date|date_format:Y-n-j',
+            'date_end' => 'date|date_format:Y-n-j'
         ]);
 
         $ticket = Ticket::find($id);
