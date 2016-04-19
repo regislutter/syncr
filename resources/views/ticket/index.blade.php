@@ -24,7 +24,7 @@
         @forelse($tickets as $ticket)
             <tr>
                 <td><a href="{{ route('ticket.show', [$ticket->id]) }}">{{ $ticket->name }}</a></td>
-                <td><a href="{{ route('project.show', $ticket->project->id) }}">{{ $ticket->project->name }}</a></td>
+                <td>@if($ticket->project)<a href="{{ route('project.show', $ticket->project->id) }}">{{ $ticket->project->name }}</a>@endif</td>
                 <td>{{ $ticket->getCategory() }}</td>
                 <td>{{ $ticket->getStatus() }}</td>
                 <td>{{ $ticket->getPriority() }}</td>

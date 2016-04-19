@@ -1,5 +1,5 @@
 <div data-ticketid="{{ $ticket->id }}" class="ticket {{ $ticket->getCategoryIconClass() }} {{ $ticket->getPriorityColorClass() }}">
-    <div class="ticket-project">{{ $ticket->project->name }}</div>
+    @if($ticket->project)<div class="ticket-project">{{ $ticket->project->name }}</div>@endif
     <div class="ticket-title">{{ $ticket->name }}</div>
 
     <div class="ticket-dates">
