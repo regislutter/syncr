@@ -130,10 +130,14 @@ table.kanban {
 
     th {
         text-align: center;
+        width: 270px;
 
         &:first-child {
-            min-width: 90px;
+            width: 90px;
             text-align: left;
+        }
+        &:last-child {
+            width: auto;
         }
     }
 

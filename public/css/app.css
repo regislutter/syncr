@@ -15001,11 +15001,16 @@ table.kanban {
 
 table.kanban th {
   text-align: center;
+  width: 270px;
 }
 
 table.kanban th:first-child {
-  min-width: 90px;
+  width: 90px;
   text-align: left;
+}
+
+table.kanban th:last-child {
+  width: auto;
 }
 
 table.kanban tr.even,
