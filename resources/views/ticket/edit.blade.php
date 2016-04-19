@@ -54,10 +54,10 @@
     </div>
     <div class="row">
         <div class="large-6 medium-6 columns">
-            {!! Form::label('date_start', 'Date start') !!}{!! Form::input('date', 'date_start') !!}
+            {!! Form::label('date_start', 'Date start') !!}{!! Form::input('date', 'date_start', date('Y-m-d', strtotime($ticket->date_start))) !!}
         </div>
         <div class="large-6 medium-6 columns">
-            {!! Form::label('date_end', 'Deadline') !!}{!! Form::input('date', 'date_end') !!}
+            {!! Form::label('date_end', 'Deadline') !!}{!! Form::input('date', 'date_end', date('Y-m-d', strtotime($ticket->date_end))) !!}
         </div>
     </div>
     {!! Form::open(array('route' => array('ticket.destroy', $ticket->id), 'method' => 'delete')) !!}
