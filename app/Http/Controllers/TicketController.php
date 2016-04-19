@@ -129,6 +129,11 @@ class TicketController extends Controller
         return redirect()->route('ticket.index');
     }
 
+    /**
+     * Load Kanban page
+     * @param bool $refresh - Activate auto-refresh or not
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function kanban($refresh = false)
     {
         $users = User::hasAccessToKanban();
@@ -140,6 +145,11 @@ class TicketController extends Controller
         return view('kanban.index', ['ticketsbacklog' => $ticketsBacklog, 'tickets' => $tickets, 'users' => $users, 'statuses' => $statuses, 'refresh' => ($refresh == 'refresh')]);
     }
 
+    /**
+     * Change the status and/or the user of a ticket on drag and drop
+     * @param Request $request - new datas
+     * @return int - Return 1 if update Ok
+     */
     public function changeStatusOrUser(Request $request){
         if(\Request::ajax()){
             $ticket = Ticket::find($request['id']);
@@ -151,6 +161,18 @@ class TicketController extends Controller
                 }
             }
             return 0;
+        }
+    }
+
+    /**
+     * Get ticket informations on click in Kanban page
+     * @param Request $request - Ticket id
+     * @return mixed - Ticket object in JSON
+     */
+    public function getInfos(Request $request){
+        if(\Request::ajax()){
+            $ticket = Ticket::find($request['id']);
+            return $ticket;
         }
     }
 }

@@ -113,12 +113,17 @@
                 }
             }).disableSelection();
 
-            @if(\Auth::user()->hasRight(\App\Right::TICKET_DELETE))
-                $('.ticket').on('click', function(e){
-                    var ticketid = $(this).data('ticketid');
+            $('.ticket').on('click', function(e){
+                var ticketid = $(this).data('ticketid');
+
+                var dataInfos = {
+                    'id': ticketid
+                };
+                $.post('{{ route('ticket.infos') }}', dataInfos)
+                .done(function(ticket){ // On request success, display ticket infos
                     swal({
-                        title: "Ajax request example",
-                        text: "Submit to run ajax request",
+                        title: ticket.name,
+                        text: ticket.description,
                         showCancelButton: true,
                         closeOnConfirm: false,
                         showLoaderOnConfirm: true,
@@ -132,19 +137,11 @@
                             return false;
                         }
                     });
+                })
+                .fail(function(){ // On request failed, display error
+                    swal("Ticket not found...", "An error occured while retrieving the ticket's data or the ticket doesn't exist. Please refer to the administrator if the error persist.", "error");
                 });
-            @else
-                $('.ticket').on('click', function(e){
-                    var ticket = $(e.target);
-                    swal({
-                        title: "Ajax request example",
-                        text: "Submit to run ajax request",
-                        showCancelButton: true,
-                        showConfirmButton: false,
-                        cancelButtonText: "Close"
-                    });
-                });
-            @endif
+            });
         });
     </script>
 @stop

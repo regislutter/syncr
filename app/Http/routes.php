@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth', 'sidebar']], function(){
     // Kanban and tickets
     Route::resource('ticket', 'TicketController');
     Route::post('ticket/change', ['as' => 'ticket.drag', 'uses' => 'TicketController@changeStatusOrUser']);
+    Route::post('ticket/infos', ['as' => 'ticket.infos', 'uses' => 'TicketController@getInfos']);
     Route::get('kanban/{refresh?}', ['as' => 'kanban', 'uses' => 'TicketController@kanban']);
 });
 
