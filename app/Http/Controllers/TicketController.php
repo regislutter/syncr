@@ -123,7 +123,10 @@ class TicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ticket = Ticket::find($id);
+        $ticket->destroy($id);
+
+        return redirect()->route('ticket.index');
     }
 
     public function kanban($refresh = false)
