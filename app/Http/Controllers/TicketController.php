@@ -30,15 +30,15 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $usersList = [0 => 'Select a user'];
-        foreach(User::all() as $user){
-            $usersList[$user->id] = $user->name;
-        }
+//        $usersList = [0 => 'Select a user'];
+//        foreach(User::all() as $user){
+//            $usersList[$user->id] = $user->name;
+//        }
         $projectsList = ['' => 'Select a project'];
         foreach(Project::all() as $project){
             $projectsList[$project->id] = $project->name;
         }
-        return view('ticket.create', ['users' => $usersList, 'projects' => $projectsList, 'categories' => Ticket::$CATEGORIES, 'priorities' => Ticket::$PRIORITIES, 'estimates' => Ticket::$ESTIMATES]);
+        return view('ticket.create', ['projects' => $projectsList, 'categories' => Ticket::$CATEGORIES, 'priorities' => Ticket::$PRIORITIES, 'estimates' => Ticket::$ESTIMATES]); // 'users' => $usersList,
     }
 
     /**
@@ -52,7 +52,6 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'project_id' => 'required',
             'date_start' => 'date|date_format:Y-n-j',
             'date_end' => 'date|date_format:Y-n-j'
         ]);
@@ -106,7 +105,6 @@ class TicketController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'category' => 'required',
-            'project_id' => 'required',
             'date_start' => 'date|date_format:Y-n-j',
             'date_end' => 'date|date_format:Y-n-j'
         ]);
