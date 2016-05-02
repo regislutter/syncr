@@ -3,12 +3,40 @@
 @section('title', 'Home')
 
 @section('content')
+    <!-- TICKETS -->
+    <a class="button small round right" href="{{ route('kanban') }}">Access Kanban dashboard</a>
+    <h2>Tickets assigned</h2>
+    <div id="list-tickets">
+    @if($tickets)
+        @foreach(\App\Ticket::$STATUSES as $statusid => $statusname)
+            @if($statusid != \App\Ticket::STATUS_BACKLOG && $statusid != \App\Ticket::STATUS_DONE)
+                <h3>{{ $statusname }}</h3>
+                <?php $ticketsStatus = $tickets->filter(function($ticket) use ($statusid) {
+                    if($ticket->status == $statusid){
+                       return true;
+                    }
+                }); ?>
+                @forelse($ticketsStatus as $ticket)
+                    @include ('kanban.ticket', ['ticket' => $ticket])
+                @empty
+                    No tickets.
+                @endforelse
+            @endif
+        @endforeach
+    @else
+        You don't have any tickets. Great job!
+    @endif
+    </div>
+<br/><br/>
+
+    <!-- COPYDECKS -->
+    <h2>Copydecks</h2>
     <?php
     $lastDate = null;
     $listProject = [];
     $listCopydeck = []; ?>
     @if($filesUpdate == null)
-        No copydecks.
+        No copydecks to display.
     @else
         <dl class="sub-nav legend">
             <dt>Filter:</dt>

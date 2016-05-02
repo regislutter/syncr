@@ -27,6 +27,13 @@
     }
 }
 
+#list-tickets {
+    .ticket {
+        display: inline-block;
+        min-width: 250px;
+    }
+}
+
 .backlog, .user-tickets {
     > div {
         display: inline-block;

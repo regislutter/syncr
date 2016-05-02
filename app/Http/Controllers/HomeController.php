@@ -18,13 +18,15 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $tickets = \Auth::user()->tickets;
+
         $status = $request->input('status');
         if(!isset($status)){
             $status = 'all';
         }
 
         $filesUpdate = \Auth::user()->subscribedFiles($status);
-        return view('home', ['filesUpdate' => $filesUpdate, 'status' => $status]);
+        return view('home', ['tickets' => $tickets, 'filesUpdate' => $filesUpdate, 'status' => $status]);
     }
 
     public function admin(){
