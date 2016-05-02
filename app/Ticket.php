@@ -131,7 +131,7 @@ class Ticket extends Model
     }
 
     public function getDateEnd(){
-        if(!$this->date_end) {
+        if(!$this->date_end || $this->date_end == '0000-00-00 00:00:00') {
             return '/';
         }
         return date(Ticket::DATE_FORMAT, strtotime($this->date_end));
