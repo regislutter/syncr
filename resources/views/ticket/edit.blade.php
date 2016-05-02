@@ -64,7 +64,34 @@
     {!! Form::submit('Update ticket', array('class' => 'button small round success')) !!}
 
     {!! Form::close() !!}
-    {!! Form::open(array('route' => array('ticket.destroy', $ticket->id), 'method' => 'delete')) !!}
-    <button type="submit" class="small round alert right">Delete</button>
+
+    {!! Form::open(array('route' => array('ticket.destroy', $ticket->id), 'method' => 'delete', 'id' => 'delete-form')) !!}
     {!! Form::close() !!}
+    <div id="delete-btn" class="button small round alert right">Delete</div>
+@stop
+
+@section('javascript')
+    <script type="text/javascript">
+        $(function() {
+            $('#delete-btn').on('click', function(){
+                swal({
+                    title: 'Are you sure to delete {{ $ticket->name }}?',
+                    text: 'You will not be able to recover this awesome ticket!',
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "No, that's crazy!",
+                    confirmButtonText: "Yes, delete it.",
+                },
+                function(isConfirm){
+                    if (isConfirm) {
+                        $('#delete-form').submit();
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
 @stop
