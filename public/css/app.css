@@ -14935,6 +14935,14 @@ img.avatar.small {
   display: none;
 }
 
+#backlog-tickets {
+  width: 100%;
+}
+
+#backlog-tickets .ticket {
+  max-width: 250px;
+}
+
 .backlog > div,
 .user-tickets > div {
   display: inline-block;

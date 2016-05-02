@@ -19,6 +19,14 @@
     }
 }
 
+#backlog-tickets {
+    width: 100%;
+
+    .ticket {
+        max-width: 250px;
+    }
+}
+
 .backlog, .user-tickets {
     > div {
         display: inline-block;
