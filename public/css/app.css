@@ -14885,6 +14885,34 @@ img.avatar.small {
   padding: 2px;
 }
 
+.color-chart-info,
+.text-chart-info {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  color: black;
+}
+
+.color-chart-info.text-white,
+.text-chart-info.text-white {
+  color: white;
+}
+
+.color-chart {
+  text-align: center;
+}
+
+.color-chart-info {
+  padding: 100px 10px 10px;
+  text-align: center;
+  font-size: 12px;
+  border: 1px solid #DCDCDC;
+}
+
+.text-chart {
+  padding: 10px 0;
+}
+
 .backlog {
   background: #F9F9F9;
   padding: 15px;

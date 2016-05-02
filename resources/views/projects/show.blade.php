@@ -166,9 +166,6 @@
     $colorsass = '/* Colors */
 
 ';
-    $titlesass = '/* Titles */
-
-';
     $breakpointsass = '/* Breakpoints */
 
 ';
@@ -208,7 +205,7 @@ p {
         $designchart->font_serif != null || $designchart->line_height != null)
     <div class="row">
         <div class="large-12 columns">
-            <h5><span class="fi-italic"></span> Fonts</h5>
+            <h5><span class="fi-italic"></span> Default fonts</h5>
         </div>
     </div>
     <div class="row">
@@ -247,358 +244,391 @@ p {
             <h5><span class="fi-brush"></span> Colors</h5>
         </div>
     </div>
-    <div class="row">
-        <div class="large-6 medium-6 columns">
-            @if($designchart->background_color != null)
-                <?php $bodysass .= '    background: #'.$designchart->background_color.';
+
+        <?php
+            function getContrastYIQ($hexcolor){
+                $r = hexdec(substr($hexcolor,0,2));
+                $g = hexdec(substr($hexcolor,2,2));
+                $b = hexdec(substr($hexcolor,4,2));
+                $yiq = (($r*299)+($g*587)+($b*114))/1000;
+                return ($yiq >= 128) ? ' text-black' : ' text-white';
+            }
+        ?>
+
+        <div class="row">
+            <div class="large-1 columns color-chart">
+                @if($designchart->background_color != null)
+                    <?php $bodysass .= '    background: #'.$designchart->background_color.';
 '; ?>
-                Background: <span class="label round" style="background-color:#{{ $designchart->background_color }};"><span class="invert-color-text">#{{ $designchart->background_color }}</span></span><br/>
-            @endif
-            @if($designchart->primary_color != null)
-                <?php $colorsass .= '$primary-color: #'.$designchart->primary_color.';
+                    Background<br/><span class="color-chart-info{{ getContrastYIQ($designchart->background_color) }}" style="background-color:#{{ $designchart->background_color }};">#{{ $designchart->background_color }}</span><br/>
+                    @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->primary_color != null)
+                    <?php $colorsass .= '$primary-color: #'.$designchart->primary_color.';
 '; ?>
-                Primary: <span class="label round" style="background-color:#{{ $designchart->primary_color }};"><span class="invert-color-text">#{{ $designchart->primary_color }}</span></span><br/>
-            @endif
-            @if($designchart->secondary_color != null)
-                <?php $colorsass .= '$secondary-color: #'.$designchart->secondary_color.';
+                    Primary<br/><span class="color-chart-info{{ getContrastYIQ($designchart->primary_color) }}" style="background-color:#{{ $designchart->primary_color }};">#{{ $designchart->primary_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->secondary_color != null)
+                    <?php $colorsass .= '$secondary-color: #'.$designchart->secondary_color.';
 '; ?>
-                Secondary: <span class="label round" style="background-color:#{{ $designchart->secondary_color }};"><span class="invert-color-text">#{{ $designchart->secondary_color }}</span></span><br/>
-            @endif
+                        Secondary<br/><span class="color-chart-info{{ getContrastYIQ($designchart->secondary_color) }}" style="background-color:#{{ $designchart->secondary_color }};">#{{ $designchart->secondary_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->info_color != null)
+                    <?php $colorsass .= '$info-color: #'.$designchart->info_color.';
+'; ?>
+                        Info<br/><span class="color-chart-info{{ getContrastYIQ($designchart->info_color) }}" style="background-color:#{{ $designchart->info_color }};">#{{ $designchart->info_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->success_color != null)
+                    <?php $colorsass .= '$success-color: #'.$designchart->success_color.';
+'; ?>
+                        Success<br/><span class="color-chart-info{{ getContrastYIQ($designchart->success_color) }}" style="background-color:#{{ $designchart->success_color }};">#{{ $designchart->success_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->warning_color != null)
+                    <?php $colorsass .= '$warning-color: #'.$designchart->warning_color.';
+'; ?>
+                        Warning<br/><span class="color-chart-info{{ getContrastYIQ($designchart->warning_color) }}" style="background-color:#{{ $designchart->warning_color }};">#{{ $designchart->warning_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-1 columns color-chart">
+                @if($designchart->alert_color != null)
+                    <?php $colorsass .= '$alert-color: #'.$designchart->alert_color.';
+'; ?>
+                    Alert<br/><span class="color-chart-info{{ getContrastYIQ($designchart->alert_color) }}" style="background-color:#{{ $designchart->alert_color }};">#{{ $designchart->alert_color }}</span><br/>
+                @else
+                    Empty
+                @endif
+            </div>
+            <div class="large-5 columns"></div>
         </div>
-        <div class="large-6 medium-6 columns">
-            @if($designchart->info_color != null)
-                <?php $colorsass .= '$info-color: #'.$designchart->info_color.';
-'; ?>
-                Info: <span class="label round" style="background-color:#{{ $designchart->info_color }};"><span class="invert-color-text">#{{ $designchart->info_color }}</span></span><br/>
-            @endif
-            @if($designchart->success_color != null)
-                <?php $colorsass .= '$success-color: #'.$designchart->success_color.';
-'; ?>
-                Success: <span class="label round" style="background-color:#{{ $designchart->success_color }};"><span class="invert-color-text">#{{ $designchart->success_color }}</span></span><br/>
-            @endif
-            @if($designchart->warning_color != null)
-                <?php $colorsass .= '$warning-color: #'.$designchart->warning_color.';
-'; ?>
-                Warning: <span class="label round" style="background-color:#{{ $designchart->warning_color }};"><span class="invert-color-text">#{{ $designchart->warning_color }}</span></span><br/>
-            @endif
-            @if($designchart->alert_color != null)
-                <?php $colorsass .= '$alert-color: #'.$designchart->alert_color.';
-'; ?>
-                Alert: <span class="label round" style="background-color:#{{ $designchart->alert_color }};"><span class="invert-color-text">#{{ $designchart->alert_color }}</span></span><br/>
-            @endif
-        </div>
-    </div>
+
     <br/>
-    @endif
-    @if($designchart->text_font != null || $designchart->text_color != null ||
-        $designchart->text_font_size != null || $designchart->text_line_height != null)
-        <?php $fontsass .= 'p {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h5><span class="fi-text"></span> Text</h5>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->text_font != null)
-                <?php $fontsass .= '    font-family: \''.$designchart->text_font.'\';
-'; ?>
-                Font: {{ $designchart->text_font }}<br/>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->text_color != null)
-                <?php $fontsass .= '    color: #'.$designchart->text_color.';
-'; ?>
-                Color: <span class="label round" style="background-color:#{{ $designchart->text_color }};"><span class="invert-color-text">#{{ $designchart->text_color }}</span></span><br/>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->text_font_size != null)
-                <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->text_font_size.'px);
-'; ?>
-                Font size: {{ $designchart->text_font_size }}px<br/>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->text_line_height != null)
-                <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->text_line_height.'px);
-'; ?>
-                Line height: {{ $designchart->text_line_height }}px<br/>
-            @endif
-        </div>
-    </div>
-    <br/>
-        <?php $fontsass .= '}
-'; ?>
     @endif
 
-    <?php $displayH1 = ($designchart->title_h1_font != null || $designchart->title_h1_color != null ||
-                    $designchart->title_h1_font_size != null || $designchart->title_h1_line_height != null);
-    $displayH2 = ($designchart->title_h2_font != null || $designchart->title_h2_color != null ||
-            $designchart->title_h2_font_size != null || $designchart->title_h2_line_height != null);
-    $displayH3 = ($designchart->title_h3_font != null || $designchart->title_h3_color != null ||
-            $designchart->title_h3_font_size != null || $designchart->title_h3_line_height != null);
-    $displayH4 = ($designchart->title_h4_font != null || $designchart->title_h4_color != null ||
-            $designchart->title_h4_font_size != null || $designchart->title_h4_line_height != null);
-    $displayH5 = ($designchart->title_h5_font != null || $designchart->title_h5_color != null ||
-            $designchart->title_h5_font_size != null || $designchart->title_h5_line_height != null);
-    $displayH6 = ($designchart->title_h6_font != null || $designchart->title_h6_color != null ||
-            $designchart->title_h6_font_size != null || $designchart->title_h6_line_height != null);
-            ?>
-    @if($displayH1 || $displayH2 || $displayH3 || $displayH4 || $displayH5 || $displayH6)
+    <?php $globalText = ($designchart->text_font != null || $designchart->text_color != null ||
+                $designchart->text_font_size != null || $designchart->text_line_height != null);
+        $displayH1 = ($designchart->title_h1_font != null || $designchart->title_h1_color != null ||
+                $designchart->title_h1_font_size != null || $designchart->title_h1_line_height != null);
+        $displayH2 = ($designchart->title_h2_font != null || $designchart->title_h2_color != null ||
+                $designchart->title_h2_font_size != null || $designchart->title_h2_line_height != null);
+        $displayH3 = ($designchart->title_h3_font != null || $designchart->title_h3_color != null ||
+                $designchart->title_h3_font_size != null || $designchart->title_h3_line_height != null);
+        $displayH4 = ($designchart->title_h4_font != null || $designchart->title_h4_color != null ||
+                $designchart->title_h4_font_size != null || $designchart->title_h4_line_height != null);
+        $displayH5 = ($designchart->title_h5_font != null || $designchart->title_h5_color != null ||
+                $designchart->title_h5_font_size != null || $designchart->title_h5_line_height != null);
+        $displayH6 = ($designchart->title_h6_font != null || $designchart->title_h6_color != null ||
+                $designchart->title_h6_font_size != null || $designchart->title_h6_line_height != null);
+        ?>
+
+    @if($globalText || $displayH1 || $displayH2 || $displayH3 || $displayH4 || $displayH5 || $displayH6)
+        <div style="font-family: '{{ $designchart->font_sans_serif }}'; line-height: {{ $designchart->line_height }}px; font-size: {{ $designchart->font_size }}px;">
     <div class="row">
         <div class="large-12 columns">
-            <h5><span class="fi-bold"></span> Titles</h5>
-        </div>
-    </div>
-    @if($displayH1)
-        <?php $titlesass .= 'h1 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H1</h6>
+            <h5><span class="fi-text"></span> Texts</h5>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h1_font != null)
-                Font: {{ $designchart->title_h1_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h1_font.'\';
+        <div class="large-12 columns text-chart">
+            @if($globalText)
+                <?php $fontsass .= 'p {
 '; ?>
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->text_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->text_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: #'.$designchart->text_font.';'; ?>
+                    <?php $text .= 'Font: '.$designchart->text_font.'; ' ?>
+                @endif
+                @if($designchart->text_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->text_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: #'.$designchart->text_font_size.';'; ?>
+                    <?php $text .= 'Font size: '.$designchart->text_font_size.'; ' ?>
+                @endif
+                @if($designchart->text_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->text_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: #'.$designchart->text_line_height.';'; ?>
+                    <?php $text .= 'Line height: '.$designchart->text_line_height.'; ' ?>
+                @endif
+                @if($designchart->text_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->text_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->text_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->text_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a paragraph</span>
+                {{--P: {!! $text !!}--}}
+            @else
+                Empty
             @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h1_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h1_color }};"><span class="invert-color-text">#{{ $designchart->title_h1_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h1_color.';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h1_font_size != null)
-                Font size: {{ $designchart->title_h1_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h1_font_size.'px);
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h1_line_height != null)
-                Line height: {{ $designchart->title_h1_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h1_line_height.'px);
-'; ?>
-            @endif
-        </div>
-    </div>
-    <?php $titlesass .= '}
-'; ?>
-    @endif
-    @if($displayH2)
-        <?php $titlesass .= 'h2 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H2</h6>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h2_font != null)
-                Font: {{ $designchart->title_h2_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h2_font.'\';
+        <div class="large-12 columns text-chart">
+            @if($displayH1)
+                <?php $fontsass .= 'h1 {
 '; ?>
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h1_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h1_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h1_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h1_font.'; ' ?>
+                @endif
+                @if($designchart->title_h1_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h1_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h1_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h1_font_size.'px; ' ?>
+                @endif
+                @if($designchart->title_h1_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h1_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h1_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h1_line_height.'px; ' ?>
+                @endif
+                @if($designchart->title_h1_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h1_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h1_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h1_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H1</span>
+                {{--H1: {!! $text !!}--}}
+            @else
+                Empty
             @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h2_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h2_color }};"><span class="invert-color-text">#{{ $designchart->title_h2_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h2_color.';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h2_font_size != null)
-                Font size: {{ $designchart->title_h2_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h2_font_size.'px);
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h2_line_height != null)
-                Line height: {{ $designchart->title_h2_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h2_line_height.'px);
-'; ?>
-            @endif
-        </div>
-    </div>
-    <?php $titlesass .= '}
-'; ?>
-    @endif
-    @if($displayH3)
-        <?php $titlesass .= 'h3 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H3</h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h3_font != null)
-                Font: {{ $designchart->title_h3_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h3_font.'\';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h3_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h3_color }};"><span class="invert-color-text">#{{ $designchart->title_h3_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h3_color.';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h3_font_size != null)
-                Font size: {{ $designchart->title_h3_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h3_font_size.'px);
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h3_line_height != null)
-                Line height: {{ $designchart->title_h3_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h3_line_height.'px);
-'; ?>
-            @endif
-        </div>
-    </div>
-    <?php $titlesass .= '}
-'; ?>
-    @endif
-    @if($displayH4)
-        <?php $titlesass .= 'h4 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H4</h6>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h4_font != null)
-                Font: {{ $designchart->title_h4_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h4_font.'\';
+        <div class="large-12 columns text-chart">
+            @if($displayH2)
+                <?php $fontsass .= 'h2 {
 '; ?>
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h2_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h2_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h2_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h2_font.'<br/>' ?>
+                @endif
+                @if($designchart->title_h2_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h2_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h2_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h2_font_size.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h2_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h2_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h2_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h2_line_height.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h2_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h2_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h2_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h2_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H2</span>
+                {{--H2: {!! $text !!}--}}
+            @else
+                Empty
             @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h4_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h4_color }};"><span class="invert-color-text">#{{ $designchart->title_h4_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h4_color.';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h4_font_size != null)
-                Font size: {{ $designchart->title_h4_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h4_font_size.'px);
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h4_line_height != null)
-                Line height: {{ $designchart->title_h4_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h4_line_height.'px);
-'; ?>
-            @endif
-        </div>
-    </div>
-    <?php $titlesass .= '}
-'; ?>
-    @endif
-    @if($displayH5)
-        <?php $titlesass .= 'h5 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H5</h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h5_font != null)
-                Font: {{ $designchart->title_h5_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h5_font.'\';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h5_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h5_color }};"><span class="invert-color-text">#{{ $designchart->title_h5_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h5_color.';
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h5_font_size != null)
-                Font size: {{ $designchart->title_h5_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h5_font_size.'px);
-'; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h5_line_height != null)
-                Line height: {{ $designchart->title_h5_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h5_line_height.'px);
-'; ?>
-            @endif
-        </div>
-    </div>
-    <?php $titlesass .= '}
-'; ?>
-    @endif
-    @if($displayH6)
-        <?php $titlesass .= 'h6 {
-'; ?>
-    <div class="row">
-        <div class="large-12 columns">
-            <h6>Title H6</h6>
         </div>
     </div>
     <div class="row">
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h6_font != null)
-                Font: {{ $designchart->title_h6_font }}<br/>
-                <?php $titlesass .= '   font-family: \''.$designchart->title_h6_font.'\';
+        <div class="large-12 columns text-chart">
+            @if($displayH3)
+                <?php $fontsass .= 'h3 {
 '; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h6_color != null)
-                Color: <span class="label round" style="background-color:#{{ $designchart->title_h6_color }};"><span class="invert-color-text">#{{ $designchart->title_h6_color }}</span></span><br/>
-                <?php $titlesass .= '   color: #'.$designchart->title_h6_color.';
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h3_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h3_font.'\';
 '; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h6_font_size != null)
-                Font size: {{ $designchart->title_h6_font_size }}px<br/>
-                <?php $titlesass .= '   @include rem(\'font-size\', '.$designchart->title_h6_font_size.'px);
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h3_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h3_font.'<br/>' ?>
+                @endif
+                @if($designchart->title_h3_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h3_font_size.'px);
 '; ?>
-            @endif
-        </div>
-        <div class="large-3 medium-3 columns">
-            @if($designchart->title_h6_line_height != null)
-                Line height: {{ $designchart->title_h6_line_height }}px<br/>
-                <?php $titlesass .= '   @include rem(\'line-height\', '.$designchart->title_h6_line_height.'px);
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h3_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h3_font_size.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h3_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h3_line_height.'px);
 '; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h3_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h3_line_height.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h3_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h3_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h3_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h3_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H3</span>
+                {{--H3: {!! $text !!}--}}
+            @else
+                Empty
             @endif
         </div>
     </div>
-    <?php $titlesass .= '}
+    <div class="row">
+        <div class="large-12 columns text-chart">
+            @if($displayH4)
+                <?php $fontsass .= 'h4 {
 '; ?>
-    @endif
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h4_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h4_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h4_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h4_font.'<br/>' ?>
+                @endif
+                @if($designchart->title_h4_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h4_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h4_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h4_font_size.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h4_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h4_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h4_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h4_line_height.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h4_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h4_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h4_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h4_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H4</span>
+                {{--H4: {!! $text !!}--}}
+            @else
+                Empty
+            @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns text-chart">
+            @if($displayH5)
+                <?php $fontsass .= 'h5 {
+'; ?>
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h5_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h5_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h5_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h5_font.'<br/>' ?>
+                @endif
+                @if($designchart->title_h5_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h5_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h5_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h5_font_size.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h5_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h5_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h5_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h5_line_height.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h5_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h5_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h5_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h5_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H5</span>
+                {{--H5: {!! $text !!}--}}
+            @else
+                Empty
+            @endif
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns text-chart">
+            @if($displayH6)
+                <?php $fontsass .= 'h6 {
+'; ?>
+                <?php $text = ''; $fontcss = 'background-color:'.$designchart->background_color.';'; ?>
+                @if($designchart->title_h6_font != null)
+                    <?php $fontsass .= '    font-family: \''.$designchart->title_h6_font.'\';
+'; ?>
+                    <?php $fontcss .= 'font-family: \''.$designchart->title_h6_font.'\';'; ?>
+                    <?php $text .= 'Font: '.$designchart->title_h6_font.'<br/>' ?>
+                @endif
+                @if($designchart->title_h6_font_size != null)
+                    <?php $fontsass .= '    @include rem(\'font-size\', '.$designchart->title_h6_font_size.'px);
+'; ?>
+                    <?php $fontcss .= 'font-size: '.$designchart->title_h6_font_size.'px;'; ?>
+                    <?php $text .= 'Font size: '.$designchart->title_h6_font_size.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h6_line_height != null)
+                    <?php $fontsass .= '    @include rem(\'line-height\', '.$designchart->title_h6_line_height.'px);
+'; ?>
+                    <?php $fontcss .= 'line-height: '.$designchart->title_h6_line_height.'px;'; ?>
+                    <?php $text .= 'Line height: '.$designchart->title_h6_line_height.'px<br/>' ?>
+                @endif
+                @if($designchart->title_h6_color != null)
+                    <?php $fontsass .= '    color: #'.$designchart->title_h6_color.';
+'; ?>
+                    <?php $fontcss .= 'color: #'.$designchart->title_h6_color.';'; ?>
+                    <?php $text .= 'Color: #'.$designchart->title_h6_color ?>
+                @endif
+                    <?php $fontsass .= '}
+'; ?>
+
+                <span class="text-chart-info" style="{{ $fontcss }}">Example of text in a title H6</span>
+                {{--H6: {!! $text !!}--}}
+            @else
+                Empty
+            @endif
+        </div>
+    </div>
+        </div>
+
     <br/>
     @endif
     <div class="row">
@@ -658,7 +688,6 @@ p {
 {{ $bodysass }}
 {{ $colorsass }}
 {{ $fontsass }}
-{{ $titlesass }}
 {{ $breakpointsass }}
 {{ $mixinsass }}</code>
             </pre>
