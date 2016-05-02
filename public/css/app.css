@@ -15020,12 +15020,20 @@ table.kanban tr:nth-of-type(even) {
 }
 
 table.kanban tr:last-child .ticket {
-  min-height: auto;
-  max-height: 48px;
-  max-width: 180px;
-  overflow: hidden;
+  min-height: 0;
+  margin: 5px;
+  padding: 5px 10px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+table.kanban tr:last-child .ticket .ticket-dates {
+  margin-top: 0;
+}
+
+table.kanban tr:last-child .ticket .ticket-dates .ticket-date-start,
+table.kanban tr:last-child .ticket .ticket-dates .ticket-estimate {
+  display: none;
 }
 
 .ui-state-highlight {
