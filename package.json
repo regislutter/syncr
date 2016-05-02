@@ -1,7 +1,6 @@
 {
   "private": true,
   "devDependencies": {
-    "devbridge-styleguide": "^0.4.6",
     "gulp": "^3.8.8"
   },
   "dependencies": {
