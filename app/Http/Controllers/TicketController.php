@@ -126,7 +126,7 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         $ticket->destroy($id);
 
-        return redirect()->route('ticket.index');
+        return redirect()->route('kanban');
     }
 
     /**
