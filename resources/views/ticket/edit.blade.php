@@ -60,11 +60,11 @@
             {!! Form::label('date_end', 'Deadline') !!}{!! Form::input('date', 'date_end', date('Y-m-d', strtotime($ticket->date_end))) !!}
         </div>
     </div>
-    {!! Form::open(array('route' => array('ticket.destroy', $ticket->id), 'method' => 'delete')) !!}
-    <button type="submit" class="small round alert right">Delete</button>
-    {!! Form::close() !!}
     <a class="button small round secondary" href="{{ route('ticket.index') }}">Cancel</a>
     {!! Form::submit('Update ticket', array('class' => 'button small round success')) !!}
 
+    {!! Form::close() !!}
+    {!! Form::open(array('route' => array('ticket.destroy', $ticket->id), 'method' => 'delete')) !!}
+    <button type="submit" class="small round alert right">Delete</button>
     {!! Form::close() !!}
 @stop
