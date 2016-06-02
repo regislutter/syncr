@@ -34,7 +34,7 @@ class Ticket extends Model
     const ESTIMATE_XL = 4;
     public static $ESTIMATES = [1 => 'S', 2 => 'M', 3 => 'L', 4 => 'XL'];
 
-    const DATE_FORMAT = 'd M Y';
+    const DATE_FORMAT = 'd M';
 
     /**
      * The attributes that are mass assignable.
@@ -57,6 +57,14 @@ class Ticket extends Model
             $formatted_date = $date->format('Y-m-d H:i:s');
             $q->where('status', Ticket::STATUS_DONE)->where('updated_at', '>', $formatted_date);
         })->get();
+    }
+
+    public static function redmineFindByStatus(){
+
+    }
+
+    public static function redmineGetStatuses(){
+
     }
 
     public function user(){
